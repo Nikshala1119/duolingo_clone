@@ -8,22 +8,26 @@ function LanguageCard(props) {
 
   return (
     <div className="language-card" onClick={props.onSelect}>
-      <div className="language-flag">{props.flag}</div>
-      <h3>{props.language}</h3>
-      <p>{props.description}</p>
-      
-      {progressData && (
-        <div className="card-progress">
-          <div className="progress-stats">
-            <span>🏆 High Score: {progressData.highScore}/{progressData.totalQuestions}</span>
-            <span>📖 {progressData.completedLessons} lessons</span>
+      <div className="language-icon-wrapper">
+        <div className="language-flag">{props.flag}</div>
+      </div>
+      <div className="language-content">
+        <h3>{props.language}</h3>
+        <p>{props.description}</p>
+
+        {progressData && (
+          <div className="card-progress">
+            <div className="progress-stats">
+              <span>🏆 High Score: {progressData.highScore}/{progressData.totalQuestions}</span>
+              <span>📖 {progressData.completedLessons} lessons</span>
+            </div>
           </div>
-        </div>
-      )}
-      
-      <button className="start-btn">
-        {progressData ? 'Continue Learning' : 'Start Learning'}
-      </button>
+        )}
+
+        <button className="start-btn">
+          {progressData ? 'Continue' : 'Start'}
+        </button>
+      </div>
     </div>
   );
 }

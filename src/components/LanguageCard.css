@@ -1,78 +1,153 @@
 .language-card {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 3px solid #e5e5e5;
+    overflow: hidden;
   }
-  
+
   .language-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(88, 204, 2, 0.25);
+    border-color: #58cc02;
   }
-  
+
+  .language-card:active {
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .language-icon-wrapper {
+    background: linear-gradient(135deg, #58cc02 0%, #45a302 100%);
+    padding: 30px 20px;
+    position: relative;
+  }
+
+  .language-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
+  }
+
   .language-flag {
-    font-size: 3rem;
-    margin-bottom: 12px;
+    font-size: 4rem;
+    margin: 0;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    animation: float 3s ease-in-out infinite;
   }
-  
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .language-content {
+    padding: 24px 20px;
+  }
+
   .language-card h3 {
-    color: #333;
+    color: #3c3c3c;
     margin-bottom: 8px;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
   }
-  
+
   .language-card p {
-    color: #666;
-    margin-bottom: 16px;
+    color: #777;
+    margin-bottom: 20px;
     font-size: 0.95rem;
+    line-height: 1.5;
   }
-  
+
   .start-btn {
     background: #58cc02;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 12px;
+    padding: 14px 32px;
+    border-radius: 16px;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 8px rgba(88, 204, 2, 0.3);
+    border-bottom: 4px solid #45a302;
   }
-  
+
   .start-btn:hover {
     background: #4caf00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(88, 204, 2, 0.4);
   }
-  
+
   .start-btn:active {
-    transform: scale(0.95);
-  }
-  .language-card {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    cursor: pointer; /* Add this */
+    transform: translateY(0);
+    border-bottom-width: 2px;
   }
   .card-progress {
-    margin: 16px 0;
-    padding-top: 12px;
-    border-top: 1px solid #f0f0f0;
+    margin: 16px 0 0 0;
+    padding: 16px;
+    background: #f7f7f7;
+    border-radius: 12px;
   }
-  
+
   .progress-stats {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    font-size: 0.85rem;
-    color: #666;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #3c3c3c;
   }
-  
+
   .progress-stats span {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .language-card h3 {
+      font-size: 1.4rem;
+    }
+
+    .language-flag {
+      font-size: 3.5rem;
+    }
+
+    .start-btn {
+      padding: 12px 28px;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .language-card h3 {
+      font-size: 1.3rem;
+    }
+
+    .language-flag {
+      font-size: 3rem;
+    }
+
+    .language-content {
+      padding: 20px 16px;
+    }
+
+    .start-btn {
+      width: 100%;
+    }
   }

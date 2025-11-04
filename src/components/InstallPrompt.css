@@ -1,217 +1,191 @@
 .install-prompt {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    animation: slideUp 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  animation: slideUpBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideUpBounce {
+  from {
+    transform: translateX(-50%) translateY(150px);
+    opacity: 0;
   }
-  
-  @keyframes slideUp {
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.install-content {
+  background: white;
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 420px;
+  border: 3px solid #58cc02;
+}
+
+.install-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.install-text {
+  flex: 1;
+}
+
+.install-text h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  color: #3c3c3c;
+  font-weight: 700;
+}
+
+.install-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #777;
+  font-weight: 500;
+}
+
+.install-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.install-btn {
+  background: #58cc02;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 8px rgba(88, 204, 2, 0.3);
+  border-bottom: 4px solid #45a302;
+}
+
+.install-btn:hover {
+  background: #4caf00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(88, 204, 2, 0.4);
+}
+
+.install-btn:active {
+  transform: translateY(0);
+  border-bottom-width: 2px;
+}
+
+.dismiss-btn {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dismiss-btn:hover {
+  background: #f0f0f0;
+  color: #666;
+  transform: scale(1.1);
+}
+
+.dismiss-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 640px) {
+  .install-prompt {
+    left: 12px;
+    right: 12px;
+    transform: none;
+    bottom: 12px;
+  }
+
+  @keyframes slideUpBounce {
     from {
-      transform: translateX(-50%) translateY(100px);
+      transform: translateY(150px);
       opacity: 0;
     }
     to {
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
       opacity: 1;
     }
   }
-  
+
   .install-content {
-    background: white;
-    border-radius: 16px;
+    max-width: 100%;
     padding: 16px 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    max-width: 400px;
   }
-  
+
   .install-icon {
     font-size: 2rem;
   }
-  
-  .install-text {
-    flex: 1;
-  }
-  
+
   .install-text h3 {
-    margin: 0 0 4px 0;
     font-size: 1rem;
-    color: #333;
   }
-  
+
   .install-text p {
-    margin: 0;
     font-size: 0.85rem;
-    color: #666;
   }
-  
-  .install-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  
+
   .install-btn {
-    background: #58cc02;
-    color: white;
-    border: none;
     padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    font-size: 0.85rem;
   }
-  
-  .install-btn:hover {
-    background: #4caf00;
+}
+
+@media (max-width: 480px) {
+  .install-prompt {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
   }
-  
-  .dismiss-btn {
-    background: transparent;
-    border: none;
-    color: #999;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 8px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    transition: background 0.3s ease;
-  }
-  
-  .dismiss-btn:hover {
-    background: #f0f0f0;
-  }
-  
-  @media (max-width: 640px) {
-    .install-prompt {
-      left: 10px;
-      right: 10px;
-      transform: none;
-      bottom: 10px;
-    }
-  
-    .install-content {
-      max-width: 100%;
-    }
-  
-    .install-text h3 {
-      font-size: 0.9rem;
-    }
-  
-    .install-text p {
-      font-size: 0.8rem;
-    }
-  }.install-prompt {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    animation: slideUp 0.3s ease;
-  }
-  
-  @keyframes slideUp {
-    from {
-      transform: translateX(-50%) translateY(100px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-  }
-  
+
   .install-content {
-    background: white;
-    border-radius: 16px;
-    padding: 16px 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    max-width: 400px;
+    padding: 14px 16px;
+    gap: 12px;
   }
-  
+
   .install-icon {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
-  
-  .install-text {
-    flex: 1;
-  }
-  
+
   .install-text h3 {
-    margin: 0 0 4px 0;
-    font-size: 1rem;
-    color: #333;
+    font-size: 0.95rem;
   }
-  
+
   .install-text p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #666;
+    font-size: 0.8rem;
   }
-  
-  .install-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  
+
   .install-btn {
-    background: #58cc02;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
-  
-  .install-btn:hover {
-    background: #4caf00;
-  }
-  
+
   .dismiss-btn {
-    background: transparent;
-    border: none;
-    color: #999;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 8px;
     width: 32px;
     height: 32px;
-    border-radius: 50%;
-    transition: background 0.3s ease;
+    font-size: 1.3rem;
   }
-  
-  .dismiss-btn:hover {
-    background: #f0f0f0;
-  }
-  
-  @media (max-width: 640px) {
-    .install-prompt {
-      left: 10px;
-      right: 10px;
-      transform: none;
-      bottom: 10px;
-    }
-  
-    .install-content {
-      max-width: 100%;
-    }
-  
-    .install-text h3 {
-      font-size: 0.9rem;
-    }
-  
-    .install-text p {
-      font-size: 0.8rem;
-    }
-  }
+}

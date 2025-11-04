@@ -9,41 +9,70 @@ function LessonScreen({ language, languageId, onBack }) {
   const [showResult, setShowResult] = useState(false);
   const [xpEarned, setXpEarned] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const { updateProgress } = useContext(ProgressContext);
 
-  // ✅ Question bank for each language
+  // ✅ Text-to-Speech functionality
+  const speakText = (text, lang) => {
+    if ('speechSynthesis' in window) {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      // Set language based on the selected language
+      const langCodes = {
+        'Spanish': 'es-ES',
+        'French': 'fr-FR',
+        'German': 'de-DE',
+        'Japanese': 'ja-JP'
+      };
+
+      utterance.lang = langCodes[lang] || 'en-US';
+      utterance.rate = 0.9; // Slightly slower for learning
+      utterance.pitch = 1.0;
+
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // ✅ Question bank for each language with audio text
   const questionBank = {
     Spanish: [
-      { question: "What does 'Hola' mean?", options: ["Goodbye", "Hello", "Thank you", "Please"], correct: 1 },
-      { question: "What does 'Gracias' mean?", options: ["Hello", "Goodbye", "Thank you", "Sorry"], correct: 2 },
-      { question: "What does 'Adiós' mean?", options: ["Hello", "Goodbye", "Yes", "No"], correct: 1 },
-      { question: "What does 'Sí' mean?", options: ["No", "Yes", "Maybe", "Please"], correct: 1 },
-      { question: "What does 'Por favor' mean?", options: ["Thank you", "Sorry", "Please", "Excuse me"], correct: 2 },
+      { question: "What does 'Hola' mean?", audioText: "Hola", options: ["Goodbye", "Hello", "Thank you", "Please"], correct: 1 },
+      { question: "What does 'Gracias' mean?", audioText: "Gracias", options: ["Hello", "Goodbye", "Thank you", "Sorry"], correct: 2 },
+      { question: "What does 'Adiós' mean?", audioText: "Adiós", options: ["Hello", "Goodbye", "Yes", "No"], correct: 1 },
+      { question: "What does 'Sí' mean?", audioText: "Sí", options: ["No", "Yes", "Maybe", "Please"], correct: 1 },
+      { question: "What does 'Por favor' mean?", audioText: "Por favor", options: ["Thank you", "Sorry", "Please", "Excuse me"], correct: 2 },
     ],
 
     French: [
-      { question: "What does 'Bonjour' mean?", options: ["Goodbye", "Hello", "Please", "Sorry"], correct: 1 },
-      { question: "What does 'Merci' mean?", options: ["Sorry", "Thank you", "Excuse me", "Goodnight"], correct: 1 },
-      { question: "What does 'Au revoir' mean?", options: ["Goodnight", "Goodbye", "Welcome", "Hello"], correct: 1 },
-      { question: "What does 'S'il vous plaît' mean?", options: ["Please", "Thank you", "Sorry", "Yes"], correct: 0 },
-      { question: "What does 'Oui' mean?", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
+      { question: "What does 'Bonjour' mean?", audioText: "Bonjour", options: ["Goodbye", "Hello", "Please", "Sorry"], correct: 1 },
+      { question: "What does 'Merci' mean?", audioText: "Merci", options: ["Sorry", "Thank you", "Excuse me", "Goodnight"], correct: 1 },
+      { question: "What does 'Au revoir' mean?", audioText: "Au revoir", options: ["Goodnight", "Goodbye", "Welcome", "Hello"], correct: 1 },
+      { question: "What does 'S'il vous plaît' mean?", audioText: "S'il vous plaît", options: ["Please", "Thank you", "Sorry", "Yes"], correct: 0 },
+      { question: "What does 'Oui' mean?", audioText: "Oui", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
     ],
 
     German: [
-      { question: "What does 'Hallo' mean?", options: ["Goodbye", "Hello", "Please", "Thanks"], correct: 1 },
-      { question: "What does 'Danke' mean?", options: ["Sorry", "Thank you", "Good", "Hello"], correct: 1 },
-      { question: "What does 'Tschüss' mean?", options: ["Goodbye", "Please", "Yes", "Hello"], correct: 0 },
-      { question: "What does 'Ja' mean?", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
-      { question: "What does 'Bitte' mean?", options: ["Please", "Sorry", "Goodbye", "Thanks"], correct: 0 },
+      { question: "What does 'Hallo' mean?", audioText: "Hallo", options: ["Goodbye", "Hello", "Please", "Thanks"], correct: 1 },
+      { question: "What does 'Danke' mean?", audioText: "Danke", options: ["Sorry", "Thank you", "Good", "Hello"], correct: 1 },
+      { question: "What does 'Tschüss' mean?", audioText: "Tschüss", options: ["Goodbye", "Please", "Yes", "Hello"], correct: 0 },
+      { question: "What does 'Ja' mean?", audioText: "Ja", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
+      { question: "What does 'Bitte' mean?", audioText: "Bitte", options: ["Please", "Sorry", "Goodbye", "Thanks"], correct: 0 },
     ],
 
     Japanese: [
-      { question: "What does 'こんにちは (Konnichiwa)' mean?", options: ["Goodbye", "Hello", "Thank you", "Yes"], correct: 1 },
-      { question: "What does 'ありがとう (Arigatou)' mean?", options: ["Please", "Sorry", "Thank you", "Excuse me"], correct: 2 },
-      { question: "What does 'さようなら (Sayounara)' mean?", options: ["Goodbye", "Hello", "Good morning", "Yes"], correct: 0 },
-      { question: "What does 'はい (Hai)' mean?", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
-      { question: "What does 'お願いします (Onegaishimasu)' mean?", options: ["Please", "Sorry", "Excuse me", "Thank you"], correct: 0 },
+      { question: "What does 'こんにちは (Konnichiwa)' mean?", audioText: "こんにちは", options: ["Goodbye", "Hello", "Thank you", "Yes"], correct: 1 },
+      { question: "What does 'ありがとう (Arigatou)' mean?", audioText: "ありがとう", options: ["Please", "Sorry", "Thank you", "Excuse me"], correct: 2 },
+      { question: "What does 'さようなら (Sayounara)' mean?", audioText: "さようなら", options: ["Goodbye", "Hello", "Good morning", "Yes"], correct: 0 },
+      { question: "What does 'はい (Hai)' mean?", audioText: "はい", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
+      { question: "What does 'お願いします (Onegaishimasu)' mean?", audioText: "お願いします", options: ["Please", "Sorry", "Excuse me", "Thank you"], correct: 0 },
     ],
   };
 
@@ -91,10 +120,12 @@ function LessonScreen({ language, languageId, onBack }) {
       </div>
 
       <div className="progress-bar">
-        <div 
-          className="progress-fill" 
-          style={{width: `${((currentQuestion + 1) / questions.length) * 100}%`}}
-        ></div>
+        <div>
+          <div
+            className="progress-fill"
+            style={{width: `${((currentQuestion + 1) / questions.length) * 100}%`}}
+          ></div>
+        </div>
       </div>
 
       {!isComplete ? (
@@ -102,7 +133,18 @@ function LessonScreen({ language, languageId, onBack }) {
           <div className="question-number">
             Question {currentQuestion + 1} of {questions.length}
           </div>
-          
+
+          <div className="audio-section">
+            <button
+              className={`audio-btn ${isSpeaking ? 'speaking' : ''}`}
+              onClick={() => speakText(questions[currentQuestion].audioText, language)}
+              title="Listen to pronunciation"
+            >
+              {isSpeaking ? '🔊' : '🔈'}
+            </button>
+            <p className="audio-hint">Tap to hear pronunciation</p>
+          </div>
+
           <h3 className="question-text">{questions[currentQuestion].question}</h3>
 
           <div className="options-grid">
