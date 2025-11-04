@@ -255,3 +255,23 @@
       width: 100%;
     }
   }
+  .xp-earned {
+    margin: 20px 0;
+  }
+  
+  .xp-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #333;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+    animation: bounce 0.5s ease;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }

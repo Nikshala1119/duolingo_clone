@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ProgressContext } from '../context/ProgressContext';
 import './LessonScreen.css';
 
 function LessonScreen(props) {
@@ -6,6 +7,9 @@ function LessonScreen(props) {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [xpEarned, setXpEarned] = useState(0);
+  
+  const { updateProgress } = useContext(ProgressContext);
 
   // Sample questions for Spanish
   const questions = [
@@ -50,6 +54,13 @@ function LessonScreen(props) {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer(null);
       setShowResult(false);
+    } else {
+      // Save progress when completing the lesson
+      const earnedXP = updateProgress(props.languageId, {
+        score: score + (selectedAnswer === questions[currentQuestion].correct ? 1 : 0),
+        total: questions.length
+      });
+      setXpEarned(earnedXP);
     }
   };
 
@@ -58,6 +69,7 @@ function LessonScreen(props) {
     setScore(0);
     setSelectedAnswer(null);
     setShowResult(false);
+    setXpEarned(0);
   };
 
   // Check if quiz is complete
@@ -115,7 +127,7 @@ function LessonScreen(props) {
 
           {showResult && (
             <button className="next-btn" onClick={handleNext}>
-              Continue →
+              {currentQuestion === questions.length - 1 ? 'Finish' : 'Continue'} →
             </button>
           )}
         </div>
@@ -125,6 +137,10 @@ function LessonScreen(props) {
           <h2>Lesson Complete!</h2>
           <p className="final-score">Your Score: {score}/{questions.length}</p>
           <p className="percentage">{Math.round((score / questions.length) * 100)}%</p>
+          
+          <div className="xp-earned">
+            <span className="xp-badge">+{xpEarned} XP</span>
+          </div>
           
           <div className="completion-actions">
             <button className="restart-btn" onClick={handleRestart}>

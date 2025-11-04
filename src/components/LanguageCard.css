@@ -57,3 +57,22 @@
     transition: transform 0.3s ease;
     cursor: pointer; /* Add this */
   }
+  .card-progress {
+    margin: 16px 0;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  .progress-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  .progress-stats span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
