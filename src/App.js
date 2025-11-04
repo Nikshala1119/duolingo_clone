@@ -51,24 +51,42 @@ function App() {
       {!selectedLanguage && !showStats && (
         <>
           <header className="app-header">
-            <h1>🦉 DuoLingo Clone</h1>
-            <p>Learn languages for free, forever.</p>
-            <button className="stats-toggle-btn" onClick={() => setShowStats(true)}>
-              📊 View Stats
-            </button>
+            <div className="header-content">
+              <div className="header-title">
+                <h1>🦉 Duolingo</h1>
+                <p>Learn languages for free, forever.</p>
+              </div>
+              <div className="header-actions">
+                <button className="stats-toggle-btn" onClick={() => setShowStats(true)}>
+                  📊 Stats
+                </button>
+              </div>
+            </div>
           </header>
 
-          <div className="language-grid">
-            {languages.map((lang) => (
-              <LanguageCard 
-                key={lang.id}
-                languageId={lang.id}
-                flag={lang.flag}
-                language={lang.name}
-                description={lang.description}
-                onSelect={() => handleLanguageSelect(lang)}
-              />
-            ))}
+          <div className="learning-path-container">
+            <div className="path-title">
+              <h2>Your Learning Path</h2>
+              <p>Choose a language to start your journey</p>
+            </div>
+            <div className="learning-path">
+              {languages.map((lang, index) => (
+                <React.Fragment key={lang.id}>
+                  <div className="path-node">
+                    <LanguageCard
+                      languageId={lang.id}
+                      flag={lang.flag}
+                      language={lang.name}
+                      description={lang.description}
+                      onSelect={() => handleLanguageSelect(lang)}
+                    />
+                  </div>
+                  {index < languages.length - 1 && (
+                    <div className="path-connector"></div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </>
       )}
