@@ -3,7 +3,7 @@ import './LanguageCard.css';
 
 function LanguageCard(props) {
   return (
-    <div className="language-card">
+    <div className="language-card" onClick={props.onSelect}>
       <div className="language-flag">{props.flag}</div>
       <h3>{props.language}</h3>
       <p>{props.description}</p>
