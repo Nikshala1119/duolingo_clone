@@ -2,65 +2,74 @@ import React, { useState, useContext } from 'react';
 import { ProgressContext } from '../context/ProgressContext';
 import './LessonScreen.css';
 
-function LessonScreen(props) {
+function LessonScreen({ language, languageId, onBack }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [xpEarned, setXpEarned] = useState(0);
-  
+  const [isComplete, setIsComplete] = useState(false);
+
   const { updateProgress } = useContext(ProgressContext);
 
-  // Sample questions for Spanish
-  const questions = [
-    {
-      question: "What does 'Hola' mean?",
-      options: ["Goodbye", "Hello", "Thank you", "Please"],
-      correct: 1
-    },
-    {
-      question: "What does 'Gracias' mean?",
-      options: ["Hello", "Goodbye", "Thank you", "Sorry"],
-      correct: 2
-    },
-    {
-      question: "What does 'Adiós' mean?",
-      options: ["Hello", "Goodbye", "Yes", "No"],
-      correct: 1
-    },
-    {
-      question: "What does 'Sí' mean?",
-      options: ["No", "Yes", "Maybe", "Please"],
-      correct: 1
-    },
-    {
-      question: "What does 'Por favor' mean?",
-      options: ["Thank you", "Sorry", "Please", "Excuse me"],
-      correct: 2
-    }
-  ];
+  // ✅ Question bank for each language
+  const questionBank = {
+    Spanish: [
+      { question: "What does 'Hola' mean?", options: ["Goodbye", "Hello", "Thank you", "Please"], correct: 1 },
+      { question: "What does 'Gracias' mean?", options: ["Hello", "Goodbye", "Thank you", "Sorry"], correct: 2 },
+      { question: "What does 'Adiós' mean?", options: ["Hello", "Goodbye", "Yes", "No"], correct: 1 },
+      { question: "What does 'Sí' mean?", options: ["No", "Yes", "Maybe", "Please"], correct: 1 },
+      { question: "What does 'Por favor' mean?", options: ["Thank you", "Sorry", "Please", "Excuse me"], correct: 2 },
+    ],
+
+    French: [
+      { question: "What does 'Bonjour' mean?", options: ["Goodbye", "Hello", "Please", "Sorry"], correct: 1 },
+      { question: "What does 'Merci' mean?", options: ["Sorry", "Thank you", "Excuse me", "Goodnight"], correct: 1 },
+      { question: "What does 'Au revoir' mean?", options: ["Goodnight", "Goodbye", "Welcome", "Hello"], correct: 1 },
+      { question: "What does 'S'il vous plaît' mean?", options: ["Please", "Thank you", "Sorry", "Yes"], correct: 0 },
+      { question: "What does 'Oui' mean?", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
+    ],
+
+    German: [
+      { question: "What does 'Hallo' mean?", options: ["Goodbye", "Hello", "Please", "Thanks"], correct: 1 },
+      { question: "What does 'Danke' mean?", options: ["Sorry", "Thank you", "Good", "Hello"], correct: 1 },
+      { question: "What does 'Tschüss' mean?", options: ["Goodbye", "Please", "Yes", "Hello"], correct: 0 },
+      { question: "What does 'Ja' mean?", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
+      { question: "What does 'Bitte' mean?", options: ["Please", "Sorry", "Goodbye", "Thanks"], correct: 0 },
+    ],
+
+    Japanese: [
+      { question: "What does 'こんにちは (Konnichiwa)' mean?", options: ["Goodbye", "Hello", "Thank you", "Yes"], correct: 1 },
+      { question: "What does 'ありがとう (Arigatou)' mean?", options: ["Please", "Sorry", "Thank you", "Excuse me"], correct: 2 },
+      { question: "What does 'さようなら (Sayounara)' mean?", options: ["Goodbye", "Hello", "Good morning", "Yes"], correct: 0 },
+      { question: "What does 'はい (Hai)' mean?", options: ["No", "Yes", "Maybe", "Sorry"], correct: 1 },
+      { question: "What does 'お願いします (Onegaishimasu)' mean?", options: ["Please", "Sorry", "Excuse me", "Thank you"], correct: 0 },
+    ],
+  };
+
+  // ✅ Select the correct language’s questions
+  const questions = questionBank[language] || questionBank["Spanish"];
 
   const handleAnswer = (index) => {
     setSelectedAnswer(index);
     setShowResult(true);
 
-    if (index === questions[currentQuestion].correct) {
-      setScore(score + 1);
+    const isCorrect = index === questions[currentQuestion].correct;
+    if (isCorrect) {
+      setScore(prev => prev + 1);
+      const earnedXP = updateProgress(languageId, { score: 1, total: 1 });
+      setXpEarned(prev => prev + earnedXP);
     }
   };
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setCurrentQuestion(prev => prev + 1);
       setSelectedAnswer(null);
       setShowResult(false);
     } else {
-      // Save progress when completing the lesson
-      const earnedXP = updateProgress(props.languageId, {
-        score: score + (selectedAnswer === questions[currentQuestion].correct ? 1 : 0),
-        total: questions.length
-      });
-      setXpEarned(earnedXP);
+      updateProgress(languageId, { score, total: questions.length });
+      setIsComplete(true);
     }
   };
 
@@ -70,16 +79,14 @@ function LessonScreen(props) {
     setSelectedAnswer(null);
     setShowResult(false);
     setXpEarned(0);
+    setIsComplete(false);
   };
-
-  // Check if quiz is complete
-  const isComplete = currentQuestion === questions.length - 1 && showResult;
 
   return (
     <div className="lesson-screen">
       <div className="lesson-header">
-        <button className="back-btn" onClick={props.onBack}>← Back</button>
-        <h2>{props.language} Basics</h2>
+        <button className="back-btn" onClick={onBack}>← Back</button>
+        <h2>{language} Basics</h2>
         <div className="score">Score: {score}/{questions.length}</div>
       </div>
 
@@ -146,7 +153,7 @@ function LessonScreen(props) {
             <button className="restart-btn" onClick={handleRestart}>
               Try Again
             </button>
-            <button className="home-btn" onClick={props.onBack}>
+            <button className="home-btn" onClick={onBack}>
               Back to Languages
             </button>
           </div>
