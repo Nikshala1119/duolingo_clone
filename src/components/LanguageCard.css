@@ -1,153 +1,627 @@
-.language-card {
-    background: #ffffff;
+/* src/components/LanguageCard.css - UPDATED FOR FLAG IMAGES */
+
+/**
+ * ============================================================================
+ * LANGUAGE CARD COMPONENT STYLING - FLAG IMAGE VERSION
+ * ============================================================================
+ * 
+ * This CSS is specifically designed to work with actual flag images
+ * instead of emoji flags, ensuring consistent display across all platforms.
+ * 
+ * The flag images are displayed using <img> tags, which gives us complete
+ * control over how they render, unlike emoji which depend on the OS.
+ */
+
+/* ============================================================================
+   MAIN CARD CONTAINER
+   ============================================================================ */
+
+   .language-card {
+    background: linear-gradient(to bottom, #ffffff 0%, #fafbfc 100%);
     border-radius: 20px;
-    padding: 0;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 3px solid #e5e5e5;
-    overflow: hidden;
-  }
-
-  .language-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(88, 204, 2, 0.25);
-    border-color: #58cc02;
-  }
-
-  .language-card:active {
-    transform: translateY(-4px) scale(1.01);
-  }
-
-  .language-icon-wrapper {
-    background: linear-gradient(135deg, #58cc02 0%, #45a302 100%);
-    padding: 30px 20px;
-    position: relative;
-  }
-
-  .language-icon-wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
-  }
-
-  .language-flag {
-    font-size: 4rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.06);
+    padding: 32px;
     margin: 0;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .language-content {
-    padding: 24px 20px;
-  }
-
-  .language-card h3 {
-    color: #3c3c3c;
-    margin-bottom: 8px;
-    font-size: 1.6rem;
-    font-weight: 700;
-  }
-
-  .language-card p {
-    color: #777;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  .start-btn {
-    background: #58cc02;
-    color: white;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 16px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 8px rgba(88, 204, 2, 0.3);
-    border-bottom: 4px solid #45a302;
-  }
-
-  .start-btn:hover {
-    background: #4caf00;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(88, 204, 2, 0.4);
-  }
-
-  .start-btn:active {
-    transform: translateY(0);
-    border-bottom-width: 2px;
-  }
-  .card-progress {
-    margin: 16px 0 0 0;
-    padding: 16px;
-    background: #f7f7f7;
-    border-radius: 12px;
-  }
-
-  .progress-stats {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: #3c3c3c;
+    gap: 20px;
+    min-height: 340px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.4s ease,
+      border-color 0.4s ease;
   }
-
-  .progress-stats span {
+  
+  .language-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.06),
+      0 16px 32px rgba(0, 0, 0, 0.12),
+      0 24px 48px rgba(0, 0, 0, 0.08);
+    border-color: rgba(102, 126, 234, 0.2);
+  }
+  
+  .language-card:active {
+    transform: translateY(-4px) scale(1);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .language-card:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 
+      0 0 0 4px rgba(102, 126, 234, 0.2),
+      0 8px 16px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Decorative gradient overlay */
+  .language-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    border-radius: 20px 20px 0 0;
+    z-index: 0;
+    transition: opacity 0.5s ease;
+    filter: blur(40px);
+  }
+  
+  .language-card:hover::before {
+    opacity: 0.04;
+  }
+  
+  /* ============================================================================
+     CARD HEADER SECTION
+     ============================================================================ */
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 4px;
+  }
+  
+  /* ============================================================================
+     FLAG CONTAINER - Optimized for Images
+     ============================================================================ */
+  
+  /**
+   * FLAG CONTAINER
+   * 
+   * This circular container now holds an actual flag image instead of an emoji.
+   * The styling ensures the image looks great within the circle.
+   */
+  .flag-container {
+    /* Size and Shape - same as before */
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 50%;
+    
+    /* Layout */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    
+    /* Visual Style */
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.08),
+      inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    
+    /* Positioning */
+    position: relative;
+    overflow: hidden;
+    
+    /* Animation */
+    transition: 
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.4s ease,
+      border-color 0.4s ease;
+  }
+  
+  .language-card:hover .flag-container {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 
+      0 8px 16px rgba(0, 0, 0, 0.12),
+      inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    border-color: rgba(102, 126, 234, 0.3);
+  }
+  
+  /**
+   * FLAG IMAGE
+   * 
+   * The actual flag image. We style it to fit perfectly within the circular container
+   * while maintaining aspect ratio and looking sharp.
+   */
+  .flag-image {
+    /* Size to fill the container while maintaining aspect ratio */
+    width: 100%;
+    height: 100%;
+    
+    /* Object-fit ensures the flag fills the circle without distortion */
+    /* Cover means it will fill the entire space, cropping if necessary */
+    object-fit: cover;
+    
+    /* Center the flag within the container */
+    object-position: center;
+    
+    /* Smooth rendering for the image */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    
+    /* Prevent drag/select for cleaner interaction */
+    user-select: none;
+    -webkit-user-drag: none;
+    
+    /* Smooth scaling animation */
+    transition: transform 0.3s ease;
+    
+    /* Border radius to ensure image fits the circle perfectly */
+    border-radius: 50%;
+  }
+  
+  /**
+   * FLAG IMAGE HOVER ANIMATION
+   * 
+   * The flag image itself gets a gentle counter-rotation on hover
+   */
+  .language-card:hover .flag-image {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  
+  /**
+   * FALLBACK EMOJI FLAG
+   * 
+   * Hidden by default, only shows if the image fails to load.
+   * This provides a backup in case the CDN is unavailable.
+   */
+  .flag-emoji-fallback {
+    display: none;
+    font-size: 42px;
+    line-height: 1;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+  
+  /* ============================================================================
+     LANGUAGE INFO SECTION
+     ============================================================================ */
+  
+  .language-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .language-name {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1a202c;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+  }
+  
+  .language-card:hover .language-name {
+    color: #667eea;
+  }
+  
+  .country-label {
+    font-size: 13px;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #718096;
+    transition: color 0.3s ease;
   }
-
-  @media (max-width: 640px) {
-    .language-card h3 {
-      font-size: 1.4rem;
+  
+  .language-card:hover .country-label {
+    color: #667eea;
+  }
+  
+  /* ============================================================================
+     DESCRIPTION SECTION
+     ============================================================================ */
+  
+  .language-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4a5568;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+  }
+  
+  .language-card:hover .language-description {
+    color: #2d3748;
+  }
+  
+  /* ============================================================================
+     PROGRESS INFORMATION SECTION
+     ============================================================================ */
+  
+  .progress-info {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    padding: 18px 20px;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    margin-bottom: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+  }
+  
+  .language-card:hover .progress-info {
+    background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+    border-color: #cbd5e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  .progress-stat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+  
+  .stat-icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .language-card:hover .stat-icon {
+    transform: scale(1.2);
+  }
+  
+  .stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+  }
+  
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #a0aec0;
+    white-space: nowrap;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  
+  .progress-divider {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, 
+      transparent 0%, 
+      #cbd5e0 50%, 
+      transparent 100%
+    );
+    margin: 0 8px;
+    flex-shrink: 0;
+  }
+  
+  /* ============================================================================
+     START/CONTINUE BUTTON
+     ============================================================================ */
+  
+  .start-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 
+      0 4px 12px rgba(102, 126, 234, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    overflow: hidden;
+    transition: 
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  
+  .start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%
+    );
+    transition: left 0.6s ease;
+  }
+  
+  .start-button:hover::before {
+    left: 100%;
+  }
+  
+  .start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 6px 20px rgba(102, 126, 234, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .start-button:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 2px 8px rgba(102, 126, 234, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .button-text {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .button-arrow {
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .start-button:hover .button-arrow {
+    transform: translateX(4px);
+  }
+  
+  /* ============================================================================
+     RESPONSIVE DESIGN - TABLET
+     ============================================================================ */
+  
+  @media (max-width: 768px) {
+    .language-card {
+      padding: 28px;
+      min-height: 320px;
+      gap: 16px;
     }
-
-    .language-flag {
-      font-size: 3.5rem;
+    
+    .flag-container {
+      width: 70px;
+      height: 70px;
+      min-width: 70px;
     }
-
-    .start-btn {
-      padding: 12px 28px;
-      font-size: 0.95rem;
+    
+    .language-name {
+      font-size: 28px;
+    }
+    
+    .country-label {
+      font-size: 12px;
+    }
+    
+    .language-description {
+      font-size: 14px;
+    }
+    
+    .progress-info {
+      padding: 16px;
+    }
+    
+    .stat-icon {
+      font-size: 22px;
+    }
+    
+    .stat-value {
+      font-size: 22px;
     }
   }
-
+  
+  /* ============================================================================
+     RESPONSIVE DESIGN - MOBILE
+     ============================================================================ */
+  
   @media (max-width: 480px) {
-    .language-card h3 {
-      font-size: 1.3rem;
+    .language-card {
+      padding: 24px;
+      min-height: 300px;
+      gap: 14px;
     }
-
-    .language-flag {
-      font-size: 3rem;
+    
+    .card-header {
+      gap: 16px;
     }
-
-    .language-content {
-      padding: 20px 16px;
+    
+    .flag-container {
+      width: 64px;
+      height: 64px;
+      min-width: 64px;
+      border-width: 2px;
     }
-
-    .start-btn {
-      width: 100%;
+    
+    .language-name {
+      font-size: 24px;
+    }
+    
+    .country-label {
+      font-size: 11px;
+    }
+    
+    .language-description {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    
+    .progress-info {
+      padding: 14px 16px;
+      gap: 0;
+    }
+    
+    .progress-stat {
+      gap: 10px;
+    }
+    
+    .stat-icon {
+      font-size: 20px;
+    }
+    
+    .stat-value {
+      font-size: 20px;
+    }
+    
+    .stat-label {
+      font-size: 10px;
+    }
+    
+    .progress-divider {
+      height: 36px;
+      margin: 0 6px;
+    }
+    
+    .start-button {
+      padding: 14px 20px;
+      font-size: 15px;
+    }
+    
+    .button-arrow {
+      font-size: 18px;
+    }
+    
+    .language-card:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+    
+    .language-card:hover .flag-container {
+      transform: scale(1.08) rotate(3deg);
+    }
+  }
+  
+  /* ============================================================================
+     ACCESSIBILITY - REDUCED MOTION
+     ============================================================================ */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .language-card,
+    .flag-container,
+    .flag-image,
+    .start-button,
+    .button-arrow,
+    .stat-icon,
+    .language-name,
+    .country-label,
+    .language-description {
+      transition: none;
+      animation: none;
+    }
+    
+    .language-card:hover,
+    .language-card:hover .flag-container,
+    .language-card:hover .flag-image,
+    .start-button:hover,
+    .start-button:hover .button-arrow {
+      transform: none;
+    }
+  }
+  
+  /* ============================================================================
+     ACCESSIBILITY - HIGH CONTRAST
+     ============================================================================ */
+  
+  @media (prefers-contrast: high) {
+    .language-card {
+      border: 2px solid currentColor;
+    }
+    
+    .flag-container {
+      border-width: 3px;
+      border-color: currentColor;
+    }
+    
+    .start-button {
+      border: 2px solid currentColor;
+    }
+    
+    .progress-info {
+      border: 2px solid currentColor;
+    }
+  }
+  
+  /* ============================================================================
+     PRINT STYLES
+     ============================================================================ */
+  
+  @media print {
+    .language-card {
+      box-shadow: none;
+      border: 1px solid #ccc;
+      page-break-inside: avoid;
+    }
+    
+    .language-card::before,
+    .start-button::before {
+      display: none;
+    }
+    
+    .flag-container {
+      border: 2px solid #ccc;
+      box-shadow: none;
+    }
+    
+    .start-button {
+      box-shadow: none;
+      border: 1px solid #333;
     }
   }
