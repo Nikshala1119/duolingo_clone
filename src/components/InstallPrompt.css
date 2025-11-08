@@ -1,128 +1,28 @@
-.install-prompt {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  animation: slideUpBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
+/* ENHANCED MOBILE-RESPONSIVE INSTALL PROMPT - Mobile-First Design */
 
-@keyframes slideUpBounce {
-  from {
-    transform: translateX(-50%) translateY(150px);
-    opacity: 0;
+/* =============================================================================
+   INSTALL PROMPT CONTAINER
+   ============================================================================= */
+
+   .install-prompt {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Safe area for devices with notches/home indicators */
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
   }
-  to {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-}
-
-.install-content {
-  background: white;
-  border-radius: 20px;
-  padding: 20px 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 420px;
-  border: 3px solid #58cc02;
-}
-
-.install-icon {
-  font-size: 2.5rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-.install-text {
-  flex: 1;
-}
-
-.install-text h3 {
-  margin: 0 0 4px 0;
-  font-size: 1.1rem;
-  color: #3c3c3c;
-  font-weight: 700;
-}
-
-.install-text p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #777;
-  font-weight: 500;
-}
-
-.install-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.install-btn {
-  background: #58cc02;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 8px rgba(88, 204, 2, 0.3);
-  border-bottom: 4px solid #45a302;
-}
-
-.install-btn:hover {
-  background: #4caf00;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(88, 204, 2, 0.4);
-}
-
-.install-btn:active {
-  transform: translateY(0);
-  border-bottom-width: 2px;
-}
-
-.dismiss-btn {
-  background: transparent;
-  border: none;
-  color: #999;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 8px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dismiss-btn:hover {
-  background: #f0f0f0;
-  color: #666;
-  transform: scale(1.1);
-}
-
-.dismiss-btn:active {
-  transform: scale(0.95);
-}
-
-@media (max-width: 640px) {
-  .install-prompt {
-    left: 12px;
-    right: 12px;
-    transform: none;
-    bottom: 12px;
-  }
-
-  @keyframes slideUpBounce {
+  
+  @keyframes slideUp {
     from {
-      transform: translateY(150px);
+      transform: translateY(100%);
       opacity: 0;
     }
     to {
@@ -130,62 +30,263 @@
       opacity: 1;
     }
   }
-
+  
+  /* =============================================================================
+     INSTALL CONTENT - Mobile Optimized Layout
+     ============================================================================= */
+  
   .install-content {
-    max-width: 100%;
-    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+    align-items: stretch;
   }
-
+  
   .install-icon {
-    font-size: 2rem;
+    font-size: clamp(36px, 9vw, 48px);
+    text-align: center;
+    line-height: 1;
+    /* Better emoji rendering */
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
   }
-
+  
+  .install-text {
+    text-align: center;
+    flex: 1;
+  }
+  
   .install-text h3 {
-    font-size: 1rem;
+    margin: 0 0 8px 0;
+    font-size: clamp(18px, 4.5vw, 22px);
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1.2;
   }
-
+  
   .install-text p {
-    font-size: 0.85rem;
+    margin: 0;
+    font-size: clamp(13px, 3.5vw, 15px);
+    color: #4a5568;
+    line-height: 1.4;
   }
-
-  .install-btn {
-    padding: 10px 20px;
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .install-prompt {
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
-  }
-
-  .install-content {
-    padding: 14px 16px;
+  
+  /* =============================================================================
+     INSTALL ACTIONS - Touch-Friendly Buttons
+     ============================================================================= */
+  
+  .install-actions {
+    display: flex;
     gap: 12px;
+    width: 100%;
   }
-
-  .install-icon {
-    font-size: 1.8rem;
-  }
-
-  .install-text h3 {
-    font-size: 0.95rem;
-  }
-
-  .install-text p {
-    font-size: 0.8rem;
-  }
-
+  
   .install-btn {
-    padding: 8px 16px;
-    font-size: 0.8rem;
+    /* Large touch target */
+    flex: 1;
+    min-height: 52px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: clamp(15px, 4vw, 17px);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    /* Touch optimization */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
-
+  
+  .install-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  }
+  
   .dismiss-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.3rem;
+    /* Large touch target */
+    min-width: 52px;
+    min-height: 52px;
+    padding: 14px;
+    background: #f7fafc;
+    color: #718096;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: clamp(18px, 4.5vw, 22px);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Touch optimization */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
   }
-}
+  
+  .dismiss-btn:active {
+    transform: scale(0.95);
+    background: #edf2f7;
+    border-color: #cbd5e0;
+  }
+  
+  /* =============================================================================
+     TABLET BREAKPOINT (min-width: 600px)
+     ============================================================================= */
+  
+  @media (min-width: 600px) {
+    .install-prompt {
+      padding: 24px 32px;
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+    
+    .install-content {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .install-icon {
+      font-size: 48px;
+    }
+    
+    .install-text {
+      text-align: left;
+    }
+    
+    .install-actions {
+      width: auto;
+      flex-shrink: 0;
+    }
+    
+    .install-btn {
+      min-width: 140px;
+      flex: 0 0 auto;
+    }
+  }
+  
+  /* =============================================================================
+     DESKTOP BREAKPOINT (min-width: 900px)
+     ============================================================================= */
+  
+  @media (min-width: 900px) {
+    /* Hover effects for desktop */
+    .install-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+    }
+    
+    .dismiss-btn:hover {
+      background: #edf2f7;
+      border-color: #cbd5e0;
+      transform: scale(1.05);
+    }
+  }
+  
+  /* =============================================================================
+     LANDSCAPE ORIENTATION - Mobile
+     ============================================================================= */
+  
+  @media (max-height: 600px) and (orientation: landscape) {
+    .install-prompt {
+      padding: 16px 20px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+    
+    .install-content {
+      flex-direction: row;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .install-icon {
+      font-size: 32px;
+    }
+    
+    .install-text {
+      text-align: left;
+    }
+    
+    .install-text h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    
+    .install-text p {
+      font-size: 13px;
+    }
+    
+    .install-actions {
+      width: auto;
+    }
+    
+    .install-btn,
+    .dismiss-btn {
+      min-height: 44px;
+      padding: 12px 20px;
+    }
+  }
+  
+  /* =============================================================================
+     VERY SMALL SCREENS
+     ============================================================================= */
+  
+  @media (max-width: 360px) {
+    .install-prompt {
+      padding: 16px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+    
+    .install-content {
+      gap: 12px;
+    }
+    
+    .install-icon {
+      font-size: 32px;
+    }
+    
+    .install-actions {
+      gap: 8px;
+    }
+    
+    .dismiss-btn {
+      min-width: 48px;
+      min-height: 48px;
+    }
+  }
+  
+  /* =============================================================================
+     REDUCED MOTION - Accessibility
+     ============================================================================= */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .install-prompt {
+      animation: none;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  /* =============================================================================
+     HIGH CONTRAST MODE
+     ============================================================================= */
+  
+  @media (prefers-contrast: high) {
+    .install-prompt {
+      background: #000;
+      color: #fff;
+      border-top: 3px solid #fff;
+    }
+    
+    .install-btn,
+    .dismiss-btn {
+      border: 3px solid currentColor;
+    }
+  }

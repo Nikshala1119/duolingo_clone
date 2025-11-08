@@ -1,243 +1,350 @@
-/* src/App.css - UPDATED VERSION */
+/* ENHANCED MOBILE-RESPONSIVE DUOLINGO CLONE - App.css */
 
-.App {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  flex-direction: column;
-}
+/* =============================================================================
+   GLOBAL STYLES - Mobile-First Approach
+   ============================================================================= */
 
-/* Loading Screen */
-.loading-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loading-content {
-  text-align: center;
-  color: white;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Header Styles */
-.App-header {
-  padding: 40px 20px 20px;
-  text-align: center;
-  color: white;
-}
-
-.header-content h1 {
-  margin: 0;
-  font-size: 48px;
-  font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.subtitle {
-  margin: 10px 0 20px;
-  font-size: 18px;
-  opacity: 0.95;
-}
-
-/* Header Buttons Container */
-.header-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.stats-button,
-.admin-button {
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.stats-button {
-  background: white;
-  color: #667eea;
-}
-
-.stats-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.admin-button {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
-}
-
-.admin-button:hover {
-  background: white;
-  color: #667eea;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Back Button for Admin Login */
-.back-to-home-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background: white;
-  color: #667eea;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-}
-
-.back-to-home-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Main Content Area */
-.App-main {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.languages-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  max-width: 1200px;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Back Button (used in Stats view) */
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background: white;
-  color: #667eea;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.back-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Footer */
-.App-footer {
-  padding: 20px;
-  text-align: center;
-  color: white;
-  opacity: 0.8;
-  font-size: 14px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .header-content h1 {
-    font-size: 36px;
-  }
-
-  .subtitle {
-    font-size: 16px;
-  }
-
-  .header-buttons {
+   .App {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
     flex-direction: column;
+    /* Prevent pull-to-refresh on mobile */
+    overscroll-behavior-y: contain;
+    /* Improve touch scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* =============================================================================
+     LOADING SCREEN
+     ============================================================================= */
+  
+  .loading-screen {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    padding: 20px;
   }
-
-  .stats-button,
-  .admin-button {
-    width: 200px;
+  
+  .loading-content {
+    text-align: center;
+    color: white;
   }
-
-  .languages-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 10px;
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
   }
-}
-
-@media (max-width: 480px) {
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* =============================================================================
+     HEADER STYLES - Mobile Optimized
+     ============================================================================= */
+  
   .App-header {
-    padding: 30px 15px 15px;
+    padding: max(env(safe-area-inset-top), 40px) 20px 20px;
+    text-align: center;
+    color: white;
+    /* Add safe area for notches */
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
   }
-
+  
   .header-content h1 {
-    font-size: 28px;
+    margin: 0;
+    font-size: clamp(32px, 8vw, 48px); /* Responsive font size */
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
   }
-
+  
   .subtitle {
-    font-size: 14px;
+    margin: 10px 0 20px;
+    font-size: clamp(14px, 4vw, 18px);
+    opacity: 0.95;
+    line-height: 1.4;
   }
-
+  
+  /* =============================================================================
+     HEADER BUTTONS - Touch-Friendly
+     ============================================================================= */
+  
+  .header-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
   .stats-button,
   .admin-button {
-    padding: 10px 20px;
-    font-size: 14px;
-    width: 100%;
-    max-width: 250px;
+    /* Minimum touch target size for accessibility */
+    min-height: 48px;
+    min-width: 120px;
+    padding: 14px 28px;
+    font-size: clamp(14px, 3.5vw, 16px);
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Improve touch response */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
-
+  
+  .stats-button {
+    background: white;
+    color: #667eea;
+  }
+  
+  .stats-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .admin-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .admin-button:active {
+    transform: scale(0.95);
+    background: white;
+    color: #667eea;
+  }
+  
+  /* =============================================================================
+     BACK BUTTONS - Mobile Optimized
+     ============================================================================= */
+  
   .back-button,
   .back-to-home-button {
-    top: 10px;
-    left: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
+    position: absolute;
+    top: max(env(safe-area-inset-top), 20px);
+    left: max(env(safe-area-inset-left), 20px);
+    /* Larger touch target */
+    min-height: 44px;
+    min-width: 80px;
+    padding: 12px 20px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: clamp(14px, 3.5vw, 16px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
-}
-
-/* Animation for page transitions */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  
+  .back-button:active,
+  .back-to-home-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  /* =============================================================================
+     MAIN CONTENT AREA - Mobile Optimized
+     ============================================================================= */
+  
+  .App-main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Add safe area for bottom home indicator */
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
   }
-}
-
-.App-main,
-.App-header {
-  animation: fadeIn 0.5s ease-out;
-}
+  
+  .languages-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  /* =============================================================================
+     FOOTER - Mobile Optimized
+     ============================================================================= */
+  
+  .App-footer {
+    padding: 20px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    text-align: center;
+    color: white;
+    opacity: 0.8;
+    font-size: clamp(12px, 3vw, 14px);
+  }
+  
+  /* =============================================================================
+     ANIMATION - Performance Optimized
+     ============================================================================= */
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .App-main,
+  .App-header {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* =============================================================================
+     TABLET BREAKPOINT (min-width: 600px)
+     ============================================================================= */
+  
+  @media (min-width: 600px) {
+    .languages-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    
+    .header-buttons {
+      gap: 15px;
+    }
+    
+    .stats-button,
+    .admin-button {
+      min-width: 140px;
+    }
+  }
+  
+  /* =============================================================================
+     DESKTOP BREAKPOINT (min-width: 900px)
+     ============================================================================= */
+  
+  @media (min-width: 900px) {
+    .App-header {
+      padding: 40px 20px 20px;
+    }
+    
+    .languages-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      padding: 20px;
+    }
+    
+    /* Hover effects only on desktop */
+    .stats-button:hover,
+    .admin-button:hover,
+    .back-button:hover,
+    .back-to-home-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stats-button:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .admin-button:hover {
+      background: white;
+      color: #667eea;
+    }
+  }
+  
+  /* =============================================================================
+     LARGE DESKTOP (min-width: 1200px)
+     ============================================================================= */
+  
+  @media (min-width: 1200px) {
+    .languages-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+  
+  /* =============================================================================
+     LANDSCAPE ORIENTATION - Mobile
+     ============================================================================= */
+  
+  @media (max-height: 600px) and (orientation: landscape) {
+    .App-header {
+      padding: 20px 20px 10px;
+    }
+    
+    .header-content h1 {
+      font-size: 28px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      margin: 5px 0 10px;
+    }
+    
+    .header-buttons {
+      margin-top: 10px;
+    }
+  }
+  
+  /* =============================================================================
+     REDUCED MOTION - Accessibility
+     ============================================================================= */
+  
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  /* =============================================================================
+     DARK MODE SUPPORT
+     ============================================================================= */
+  
+  @media (prefers-color-scheme: dark) {
+    .App {
+      /* Slightly darker gradient for dark mode */
+      background: linear-gradient(135deg, #5568d3 0%, #6a3e8a 100%);
+    }
+  }
+  
+  /* =============================================================================
+     PRINT STYLES
+     ============================================================================= */
+  
+  @media print {
+    .App {
+      background: white;
+    }
+    
+    .header-buttons,
+    .back-button,
+    .back-to-home-button,
+    .App-footer {
+      display: none;
+    }
+  }

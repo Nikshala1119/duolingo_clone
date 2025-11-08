@@ -1,13 +1,441 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* ENHANCED MOBILE-RESPONSIVE GLOBAL STYLES - Mobile-First Design */
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* =============================================================================
+   CSS RESET & BASE STYLES
+   ============================================================================= */
+
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  
+  /* =============================================================================
+     ROOT VARIABLES - Mobile-Optimized
+     ============================================================================= */
+  
+  :root {
+    /* Colors */
+    --primary-color: #667eea;
+    --primary-dark: #764ba2;
+    --success-color: #58cc02;
+    --success-light: #7fd814;
+    --error-color: #ff4b4b;
+    --error-dark: #cc0000;
+    --warning-color: #ffc42d;
+    --warning-dark: #ff9500;
+    
+    /* Grays */
+    --gray-50: #f7fafc;
+    --gray-100: #edf2f7;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e0;
+    --gray-400: #a0aec0;
+    --gray-500: #718096;
+    --gray-600: #4a5568;
+    --gray-700: #2d3748;
+    --gray-800: #1a202c;
+    --gray-900: #171923;
+    
+    /* Spacing - Mobile-First */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    
+    /* Typography - Fluid */
+    --font-size-xs: clamp(12px, 3vw, 14px);
+    --font-size-sm: clamp(13px, 3.5vw, 15px);
+    --font-size-base: clamp(14px, 4vw, 16px);
+    --font-size-lg: clamp(16px, 4.5vw, 18px);
+    --font-size-xl: clamp(18px, 5vw, 22px);
+    --font-size-2xl: clamp(22px, 6vw, 28px);
+    --font-size-3xl: clamp(28px, 7vw, 36px);
+    --font-size-4xl: clamp(32px, 8vw, 48px);
+    
+    /* Z-Index Scale */
+    --z-dropdown: 50;
+    --z-sticky: 100;
+    --z-fixed: 200;
+    --z-modal-backdrop: 500;
+    --z-modal: 600;
+    --z-popover: 700;
+    --z-tooltip: 800;
+  }
+  
+  /* =============================================================================
+     HTML & BODY - Mobile Optimized
+     ============================================================================= */
+  
+  html {
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Prevent font scaling in landscape */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Better font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--gray-800);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    /* Prevent pull-to-refresh on mobile */
+    overscroll-behavior-y: contain;
+    /* Better touch scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent text selection on mobile for better UX */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: text;
+  }
+  
+  /* Re-enable text selection for specific elements */
+  p,
+  h1, h2, h3, h4, h5, h6,
+  span,
+  li,
+  td,
+  th {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+  }
+  
+  /* =============================================================================
+     CODE & PRE - Better Readability
+     ============================================================================= */
+  
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    background: var(--gray-100);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+  }
+  
+  pre {
+    font-family: 'Courier New', Courier, monospace;
+    background: var(--gray-100);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* =============================================================================
+     ROOT CONTAINER - Mobile Optimized
+     ============================================================================= */
+  
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* =============================================================================
+     HEADINGS - Fluid Typography
+     ============================================================================= */
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--gray-800);
+  }
+  
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  h3 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  h4 {
+    font-size: var(--font-size-xl);
+  }
+  
+  h5 {
+    font-size: var(--font-size-lg);
+  }
+  
+  h6 {
+    font-size: var(--font-size-base);
+  }
+  
+  /* =============================================================================
+     LINKS - Touch-Friendly
+     ============================================================================= */
+  
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    /* Minimum touch target */
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+  }
+  
+  /* =============================================================================
+     BUTTONS - Touch-Optimized Base
+     ============================================================================= */
+  
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    /* Minimum touch target */
+    min-height: 44px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* =============================================================================
+     FORM ELEMENTS - Touch-Friendly
+     ============================================================================= */
+  
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    /* Minimum touch target */
+    min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    background: white;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+  
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  /* =============================================================================
+     IMAGES & MEDIA - Responsive
+     ============================================================================= */
+  
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* =============================================================================
+     SCROLLBAR STYLING - Desktop Only
+     ============================================================================= */
+  
+  @media (min-width: 900px) {
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--gray-100);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--gray-400);
+      border-radius: var(--radius-full);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gray-500);
+    }
+  }
+  
+  /* =============================================================================
+     UTILITY CLASSES - Mobile-First
+     ============================================================================= */
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  .text-right {
+    text-align: right;
+  }
+  
+  /* =============================================================================
+     FOCUS VISIBLE - Accessibility
+     ============================================================================= */
+  
+  :focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  /* =============================================================================
+     SELECTION - Brand Colors
+     ============================================================================= */
+  
+  ::selection {
+    background: var(--primary-color);
+    color: white;
+  }
+  
+  ::-moz-selection {
+    background: var(--primary-color);
+    color: white;
+  }
+  
+  /* =============================================================================
+     REDUCED MOTION - Accessibility
+     ============================================================================= */
+  
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* =============================================================================
+     HIGH CONTRAST MODE - Accessibility
+     ============================================================================= */
+  
+  @media (prefers-contrast: high) {
+    * {
+      border-color: currentColor !important;
+    }
+  }
+  
+  /* =============================================================================
+     DARK MODE SUPPORT
+     ============================================================================= */
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --gray-800: #f7fafc;
+      --gray-700: #edf2f7;
+      --gray-600: #e2e8f0;
+    }
+  }
+  
+  /* =============================================================================
+     PRINT STYLES
+     ============================================================================= */
+  
+  @media print {
+    *,
+    *::before,
+    *::after {
+      background: transparent !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    
+    a,
+    a:visited {
+      text-decoration: underline;
+    }
+    
+    img {
+      page-break-inside: avoid;
+    }
+    
+    p,
+    h2,
+    h3 {
+      orphans: 3;
+      widows: 3;
+    }
+    
+    h2,
+    h3 {
+      page-break-after: avoid;
+    }
+  }

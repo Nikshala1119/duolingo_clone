@@ -1,309 +1,268 @@
-/* src/components/LessonScreen.css - FIXED VERSION (Header Overlap Resolved) */
+/* FINAL MOBILE-RESPONSIVE LESSON SCREEN - Single Column on Mobile */
 
-/**
- * ============================================================================
- * LESSON SCREEN COMPONENT STYLING - FIXED HEADER LAYOUT
- * ============================================================================
- * 
- * This updated version specifically addresses the header overlap issue where
- * the back button and question counter were conflicting with the progress bar.
- * 
- * KEY FIXES:
- * - Added minimum widths to prevent element shrinking
- * - Improved flexbox space allocation
- * - Added proper gaps and margins for breathing room
- * - Enhanced responsive breakpoints for better small-screen handling
- * - Better overflow management
- */
-
-/* ============================================================================
-   MAIN LESSON CONTAINER
-   ============================================================================ */
+/* =============================================================================
+   LESSON SCREEN CONTAINER
+   ============================================================================= */
 
    .lesson-screen {
     min-height: 100vh;
-    width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: white;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    margin: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: relative;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior-y: contain;
   }
   
-  /* ============================================================================
-     LESSON HEADER - FIXED LAYOUT TO PREVENT OVERLAP
-     ============================================================================ */
+  /* =============================================================================
+     LESSON HEADER
+     ============================================================================= */
   
-  /**
-   * LESSON HEADER - REDESIGNED WITH CENTERED QUESTION COUNTER
-   * 
-   * This layout uses CSS Grid to create a sophisticated three-column structure
-   * where the question counter can be positioned in the absolute center while
-   * the back button and progress bar maintain their logical positions.
-   * 
-   * LAYOUT STRATEGY:
-   * - Grid with three columns: [back button] [progress bar] [empty space]
-   * - Question counter uses absolute positioning to center itself
-   * - Z-index layering ensures proper stacking order
-   */
   .lesson-header {
-    /* Layout - CSS Grid for precise control */
-    display: grid;
-    grid-template-columns: auto 1fr auto; /* back button | progress bar | space */
-    align-items: center;
-    gap: 16px;
-    
-    /* Spacing */
-    padding: 20px 24px;
-    min-height: 80px;
-    
-    /* Background with transparency */
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
-    
-    /* Border */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    
-    /* Position - relative to allow absolute positioning of question counter */
+    background: white;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
     z-index: 100;
-    
-    /* Shadow */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
-    /* Overflow visible allows question counter to position freely */
-    overflow: visible;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
   }
   
-  /**
-   * BACK BUTTON - GRID LAYOUT FIRST COLUMN
-   * 
-   * The back button occupies the first column in the grid layout,
-   * maintaining its position on the left while the question counter
-   * sits centered above the progress bar.
-   * 
-   * POSITIONING:
-   * - Grid column 1 (leftmost position)
-   * - Fixed sizing prevents layout shifts
-   * - Higher z-index than progress bar but lower than question counter
-   */
   .back-button {
-    /* Layout and sizing */
-    padding: 10px 18px;
+    min-height: 48px;
     min-width: 80px;
-    max-width: 120px;
-    
-    /* Grid positioning - this is column 1 */
-    justify-self: start; /* Align to left side of grid cell */
-    
-    /* Visual style */
-    background: rgba(255, 255, 255, 0.95);
+    padding: 12px 16px;
+    background: #f7fafc;
     color: #667eea;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    
-    /* Typography */
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-    
-    /* Interaction */
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: clamp(13px, 3.5vw, 15px);
     cursor: pointer;
-    
-    /* Shadow */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
-    /* Transitions */
-    transition: all 0.3s ease;
-    
-    /* Text alignment */
-    text-align: center;
-    
-    /* Layer above progress bar but below question counter */
-    position: relative;
-    z-index: 5;
-  }
-  
-  .back-button:hover {
-    background: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
   }
   
   .back-button:active {
-    transform: translateY(0);
+    transform: scale(0.95);
+    background: #edf2f7;
   }
   
-  /**
-   * PROGRESS BAR CONTAINER - GRID LAYOUT OPTIMIZED
-   * 
-   * In the grid layout, the progress bar occupies the middle column and
-   * automatically takes all available space between the back button and
-   * the right edge. The centered question counter appears visually on top
-   * but doesn't interfere with the bar's functionality.
-   * 
-   * GRID POSITIONING:
-   * - Occupies column 2 in the three-column grid
-   * - Grows to fill available horizontal space
-   * - Question counter sits above it on a higher z-index layer
-   */
   .progress-bar {
-    /* Grid positioning - this is column 2 */
-    /* No special positioning needed - grid handles it automatically */
-    
-    /* Size */
     height: 12px;
-    width: 100%; /* Take full width of grid column */
-    
-    /* Background */
-    background: rgba(255, 255, 255, 0.2);
-    
-    /* Rounded ends */
-    border-radius: 20px;
-    
-    /* Inner shadow creates depth */
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    /* Overflow hidden keeps fill rounded */
+    background: #e2e8f0;
+    border-radius: 12px;
     overflow: hidden;
-    
-    /* Position for child */
-    position: relative;
-    
-    /* Lower z-index so question counter appears above */
-    z-index: 1;
+    border: 2px solid #cbd5e0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
   }
   
-  /**
-   * PROGRESS FILL
-   * 
-   * No changes needed here - the parent fixes resolve the issue
-   */
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
-    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(90deg, #58cc02 0%, #7fd814 100%);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(88, 204, 2, 0.4);
   }
   
-  .progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      transparent 100%
-    );
-    animation: progressShine 2s infinite;
-  }
-  
-  @keyframes progressShine {
-    0% {
-      left: -100%;
-    }
-    50%, 100% {
-      left: 100%;
-    }
-  }
-  
-  /**
-   * QUESTION COUNTER - ABSOLUTELY CENTERED
-   * 
-   * This element now sits in the absolute center of the header, creating
-   * a balanced, symmetrical layout that draws attention to progress.
-   * 
-   * POSITIONING TECHNIQUE:
-   * - Absolute positioning removes it from normal document flow
-   * - Left 50% moves it to horizontal center
-   * - Transform translateX(-50%) perfectly centers it accounting for its own width
-   * - High z-index ensures it appears above other header elements
-   */
   .question-counter {
-    /* Typography */
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
-    
-    /* Spacing */
-    padding: 8px 16px;
-    min-width: 60px;
-    
-    /* Text formatting */
-    white-space: nowrap;
-    
-    /* Background */
-    background: rgba(255, 255, 255, 0.2);
-    
-    /* Rounded */
-    border-radius: 20px;
-    
-    /* Shadow - enhanced for prominence */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    
-    /* Text alignment */
-    text-align: center;
-    
-    /* CRITICAL: Absolute positioning for centering */
     position: absolute;
-    left: 50%; /* Move to horizontal center of header */
-    top: 50%; /* Move to vertical center of header */
-    transform: translate(-50%, -50%); /* Offset by own dimensions to truly center */
-    
-    /* Layer above other elements */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: clamp(12px, 3vw, 14px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    white-space: nowrap;
     z-index: 10;
-    
-    /* Prevent pointer events from blocking elements below */
-    pointer-events: none;
   }
   
-  /* ============================================================================
-     LESSON CONTENT - Main Question Area
-     ============================================================================ */
+  /* =============================================================================
+     LESSON CONTENT
+     ============================================================================= */
   
   .lesson-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
+    padding: 24px 16px;
     max-width: 800px;
     margin: 0 auto;
     width: 100%;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
   }
   
+  /* =============================================================================
+     QUESTION SECTION
+     ============================================================================= */
+  
   .question-section {
-    width: 100%;
+    margin-bottom: 32px;
     text-align: center;
-    margin-bottom: 48px;
   }
   
   .question-text {
-    /* Increased from 32px to 40px for greater prominence and impact */
-    font-size: 40px;
+    font-size: clamp(20px, 5vw, 32px);
     font-weight: 700;
-    color: white;
-    /* Slightly tighter line height for larger text to maintain visual cohesion */
-    line-height: 1.25;
-    margin: 0 0 28px 0; /* Increased bottom margin to balance larger text */
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-    animation: questionSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: #1a202c;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
   }
   
-  @keyframes questionSlideIn {
+  .audio-button {
+    min-height: 56px;
+    min-width: 140px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: clamp(15px, 4vw, 17px);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .audio-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  }
+  
+  .audio-button.playing {
+    background: linear-gradient(135deg, #58cc02 0%, #7fd814 100%);
+    animation: pulse 1s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 4px 12px rgba(88, 204, 2, 0.4);
+    }
+    50% {
+      box-shadow: 0 4px 20px rgba(88, 204, 2, 0.6);
+    }
+  }
+  
+  /* =============================================================================
+     OPTIONS SECTION - FORCE SINGLE COLUMN ON MOBILE
+     ============================================================================= */
+  
+  .options-section {
+    /* MOBILE: Always single column - no grid tricks! */
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 32px;
+    width: 100%;
+  }
+  
+  .option-button {
+    /* Full width on mobile */
+    width: 100%;
+    min-height: 70px;
+    padding: 18px 20px;
+    background: white;
+    border: 3px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: clamp(17px, 4.2vw, 22px);
+    font-weight: 600;
+    color: #1a202c;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transform: translateZ(0);
+    will-change: transform;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Prevent text overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .option-button:active {
+    transform: scale(0.98);
+    border-color: #cbd5e0;
+  }
+  
+  .option-button.correct {
+    background: linear-gradient(135deg, #58cc02 0%, #7fd814 100%);
+    border-color: #58cc02;
+    color: white;
+    animation: correctPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .option-button.incorrect {
+    background: linear-gradient(135deg, #ff4b4b 0%, #cc0000 100%);
+    border-color: #ff4b4b;
+    color: white;
+    animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  }
+  
+  @keyframes correctPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+  
+  .result-message {
+    text-align: center;
+    font-size: clamp(17px, 4.2vw, 22px);
+    font-weight: 700;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  .result-message.correct {
+    background: rgba(88, 204, 2, 0.1);
+    color: #2d7a00;
+    border: 2px solid rgba(88, 204, 2, 0.3);
+  }
+  
+  .result-message.incorrect {
+    background: rgba(255, 75, 75, 0.1);
+    color: #cc0000;
+    border: 2px solid rgba(255, 75, 75, 0.3);
+  }
+  
+  @keyframes slideIn {
     from {
       opacity: 0;
       transform: translateY(-20px);
@@ -314,699 +273,456 @@
     }
   }
   
-  .audio-button {
-    padding: 16px 32px;
-    background: white;
-    color: #667eea;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    user-select: none;
-  }
-  
-  .audio-button:hover:not(:disabled) {
-    background: #f8f9fa;
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .audio-button:active:not(:disabled) {
-    transform: translateY(0) scale(1);
-  }
-  
-  .audio-button.playing {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    animation: audioPlaying 1s ease-in-out infinite;
-  }
-  
-  @keyframes audioPlaying {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-  }
-  
-  .audio-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  /* ============================================================================
-     OPTIONS SECTION - Answer Choices
-     ============================================================================ */
-  
-  .options-section {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 32px;
-    animation: optionsFadeIn 0.6s ease-out 0.2s both;
-  }
-  
-  @keyframes optionsFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .option-button {
-    /* Increased padding to accommodate larger text comfortably */
-    padding: 24px 28px;
-    /* Increased minimum height for larger text */
-    min-height: 100px;
-    background: white;
-    color: #2d3748;
-    border: 3px solid transparent;
-    border-radius: 16px;
-    /* Increased from 18px to 40px to match question text size */
-    font-size: 40px;
-    font-weight: 600;
-    /* Tighter line height for larger text maintains compact appearance */
-    line-height: 1.25;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
-    position: relative;
-    /* Ensures text remains readable when it wraps to multiple lines */
-    word-wrap: break-word;
-  }
-  
-  .option-button:hover:not(:disabled) {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    border-color: #667eea;
-  }
-  
-  .option-button:active:not(:disabled) {
-    transform: translateY(-2px) scale(1);
-  }
-  
-  .option-button.correct {
-    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-    color: white;
-    border-color: #059669;
-    transform: scale(1.05);
-    animation: correctBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  @keyframes correctBounce {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1.05);
-    }
-  }
-  
-  .option-button.incorrect {
-    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-    color: white;
-    border-color: #dc2626;
-    animation: incorrectShake 0.5s ease-in-out;
-  }
-  
-  @keyframes incorrectShake {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    25% {
-      transform: translateX(-8px);
-    }
-    75% {
-      transform: translateX(8px);
-    }
-  }
-  
-  .option-button:disabled {
-    cursor: not-allowed;
-  }
-  
-  /* ============================================================================
-     RESULT SECTION - Feedback and Next Button
-     ============================================================================ */
-  
-  .result-section {
-    width: 100%;
-    text-align: center;
-    animation: resultSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  @keyframes resultSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .result-message {
-    font-size: 24px;
-    font-weight: 700;
-    padding: 16px 32px;
-    margin-bottom: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    display: inline-block;
-  }
-  
-  .result-message.success {
-    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-    color: white;
-    animation: successPulse 0.6s ease-out;
-  }
-  
-  @keyframes successPulse {
-    0% {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-  
-  .result-message.error {
-    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-    color: white;
-    animation: errorFadeIn 0.4s ease-out;
-  }
-  
-  @keyframes errorFadeIn {
-    from {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-  
   .next-button {
+    min-height: 56px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
     padding: 18px 48px;
-    background: white;
-    color: #667eea;
+    background: linear-gradient(135deg, #58cc02 0%, #7fd814 100%);
+    color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 18px;
+    border-radius: 14px;
+    font-size: clamp(16px, 4vw, 18px);
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-  }
-  
-  .next-button:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 12px rgba(88, 204, 2, 0.4);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
   
   .next-button:active {
-    transform: translateY(0) scale(1);
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(88, 204, 2, 0.3);
   }
-  
-  /* ============================================================================
-     SCORE INDICATOR
-     ============================================================================ */
   
   .score-indicator {
     position: fixed;
-    bottom: 32px;
-    right: 32px;
-    background: white;
-    color: #667eea;
-    font-size: 18px;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    right: max(24px, env(safe-area-inset-right));
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
     font-weight: 700;
-    padding: 16px 24px;
-    border-radius: 50px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    z-index: 50;
-    transition: all 0.3s ease;
+    font-size: clamp(14px, 3.5vw, 16px);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    z-index: 90;
   }
   
-  .score-indicator:hover {
-    transform: scale(1.05);
-  }
-  
-  /* ============================================================================
-     COMPLETION SCREEN
-     ============================================================================ */
+  /* =============================================================================
+     COMPLETION SCREEN - Responsive
+     ============================================================================= */
   
   .completion-screen {
-    min-height: 100vh;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 40px 20px;
-    animation: completionFadeIn 0.6s ease-out;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(24px, 6vw, 40px) clamp(16px, 4vw, 24px);
+    min-height: calc(100vh - 72px);
+    animation: fadeIn 0.5s ease-out;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
   }
   
-  @keyframes completionFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   
   .completion-screen h1 {
-    font-size: 48px;
+    font-size: clamp(28px, 7vw, 48px);
     font-weight: 800;
-    color: white;
-    margin: 0 0 32px 0;
-    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    animation: celebrationBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  @keyframes celebrationBounce {
-    0% {
-      transform: scale(0) rotate(-10deg);
-      opacity: 0;
-    }
-    60% {
-      transform: scale(1.2) rotate(5deg);
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-      opacity: 1;
-    }
+    color: #1a202c;
+    margin: 0 0 clamp(24px, 6vw, 40px) 0;
+    line-height: 1.2;
+    max-width: 100%;
+    word-wrap: break-word;
   }
   
   .score-display {
-    margin: 40px 0;
-    animation: scoreSlideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
-  }
-  
-  @keyframes scoreSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    margin: clamp(24px, 6vw, 40px) 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 5vw, 32px);
   }
   
   .score-circle {
-    width: 200px;
-    height: 200px;
+    width: clamp(140px, 40vw, 220px);
+    height: clamp(140px, 40vw, 220px);
+    max-width: 220px;
+    max-height: 220px;
+    margin: 0 auto;
     border-radius: 50%;
-    background: white;
+    border: clamp(4px, 1.5vw, 6px) solid #58cc02;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    border: 6px solid rgba(255, 255, 255, 0.3);
+    justify-content: center;
+    background: white;
+    box-shadow: 0 8px 24px rgba(88, 204, 2, 0.2);
+    animation: scoreReveal 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    flex-shrink: 0;
+  }
+  
+  @keyframes scoreReveal {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
   
   .score-percentage {
-    font-size: 56px;
+    font-size: clamp(36px, 10vw, 56px);
     font-weight: 800;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: block;
+    color: #58cc02;
     line-height: 1;
-    margin-bottom: 8px;
+    margin: 0;
   }
   
   .score-text {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: clamp(12px, 3vw, 16px);
     color: #718096;
-    display: block;
+    margin: clamp(6px, 1.5vw, 8px) 0 0 0;
+    font-weight: 600;
   }
   
   .xp-earned {
-    margin: 32px 0;
-    animation: xpPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
-  }
-  
-  @keyframes xpPop {
-    0% {
-      transform: scale(0) rotate(-180deg);
-      opacity: 0;
-    }
-    70% {
-      transform: scale(1.2) rotate(10deg);
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-      opacity: 1;
-    }
+    margin: clamp(24px, 6vw, 32px) 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   
   .xp-badge {
-    font-size: 32px;
-    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 12px);
+    background: linear-gradient(135deg, #ffc42d 0%, #ff9500 100%);
     color: white;
-    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-    padding: 16px 32px;
-    border-radius: 50px;
-    box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4);
-    display: inline-block;
+    padding: clamp(14px, 3.5vw, 16px) clamp(24px, 6vw, 32px);
+    border-radius: 25px;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 800;
+    box-shadow: 0 8px 24px rgba(255, 196, 45, 0.4);
+    animation: xpReveal 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s both;
+    max-width: 90%;
+    white-space: nowrap;
+  }
+  
+  @keyframes xpReveal {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
   
   .continue-button {
-    padding: 20px 64px;
-    background: white;
-    color: #667eea;
+    min-height: clamp(52px, 13vw, 60px);
+    width: 100%;
+    max-width: min(400px, 90vw);
+    margin: clamp(32px, 8vw, 48px) auto 0;
+    padding: clamp(16px, 4vw, 20px) clamp(40px, 10vw, 56px);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 20px;
+    border-radius: 16px;
+    font-size: clamp(16px, 4vw, 20px);
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    margin-top: 40px;
-    animation: continueSlideUp 0.6s ease-out 0.9s both;
-  }
-  
-  @keyframes continueSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .continue-button:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    display: block;
   }
   
   .continue-button:active {
-    transform: translateY(-2px) scale(1);
+    transform: scale(0.97);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
   }
   
-  /* ============================================================================
-     RESPONSIVE DESIGN - LARGE TABLET (iPad Pro, etc.)
-     ============================================================================ */
+  /* =============================================================================
+     TABLET BREAKPOINT (min-width: 600px) - ENABLE 2-COLUMN GRID
+     ============================================================================= */
   
-  @media (max-width: 1024px) {
-    .lesson-header {
-      padding: 18px 20px;
-    }
-    
-    .progress-bar {
-      min-width: 120px; /* Increased minimum for tablets */
-    }
-  }
-  
-  /* ============================================================================
-     RESPONSIVE DESIGN - TABLET
-     ============================================================================ */
-  
-  @media (max-width: 768px) {
-    .lesson-header {
-      padding: 16px 16px;
-      gap: 12px;
-      min-height: 70px;
-      /* Grid layout remains the same, just with adjusted spacing */
-    }
-    
-    .back-button {
-      padding: 8px 14px;
-      font-size: 13px;
-      min-width: 70px;
-      max-width: 100px;
-    }
-    
-    .progress-bar {
-      height: 10px;
-      /* Width handled automatically by grid */
-    }
-    
-    .question-counter {
-      font-size: 13px;
-      padding: 6px 14px;
-      min-width: 55px;
-      /* Centering maintained through absolute positioning */
-    }
-    
+  @media (min-width: 600px) {
     .lesson-content {
-      padding: 32px 16px;
+      padding: 32px 24px;
     }
     
     .question-text {
-      /* Scaled down from 40px to 34px for tablets - maintains prominence while fitting better */
-      font-size: 34px;
-    }
-    
-    .audio-button {
-      padding: 14px 28px;
-      font-size: 16px;
-    }
-    
-    .options-section {
-      gap: 12px;
-    }
-    
-    .option-button {
-      /* Scaled down from 40px to 34px to match question text on tablets */
-      padding: 20px 24px;
-      min-height: 90px;
-      font-size: 34px;
-    }
-    
-    .result-message {
-      font-size: 20px;
-      padding: 12px 24px;
-    }
-    
-    .next-button {
-      padding: 16px 40px;
-      font-size: 16px;
-    }
-    
-    .score-indicator {
-      bottom: 24px;
-      right: 24px;
-      padding: 12px 20px;
-      font-size: 16px;
-    }
-    
-    .completion-screen h1 {
-      font-size: 40px;
-    }
-    
-    .score-circle {
-      width: 180px;
-      height: 180px;
-    }
-    
-    .score-percentage {
-      font-size: 48px;
-    }
-    
-    .xp-badge {
-      font-size: 28px;
-      padding: 14px 28px;
-    }
-    
-    .continue-button {
-      padding: 18px 56px;
-      font-size: 18px;
-    }
-  }
-  
-  /* ============================================================================
-     RESPONSIVE DESIGN - MOBILE
-     ============================================================================ */
-  
-  @media (max-width: 480px) {
-    /**
-     * MOBILE HEADER - CENTERED COUNTER MAINTAINED
-     * 
-     * On mobile, the centered question counter becomes even more important
-     * as it provides a clear focal point in the limited screen space.
-     */
-    .lesson-header {
-      padding: 12px 12px;
-      gap: 8px;
-      min-height: 60px;
-      /* Grid layout continues to work beautifully on mobile */
-    }
-    
-    .back-button {
-      padding: 6px 10px;
-      font-size: 12px;
-      min-width: 60px;
-      max-width: 80px;
-    }
-    
-    .progress-bar {
-      height: 8px;
-      /* Grid handles width automatically */
-    }
-    
-    .question-counter {
-      font-size: 12px;
-      padding: 6px 12px;
-      min-width: 50px;
-      /* Absolute centering remains perfect on mobile */
-    }
-    
-    .lesson-content {
-      padding: 24px 16px;
-    }
-    
-    .question-section {
-      margin-bottom: 32px;
-    }
-    
-    .question-text {
-      /* Scaled down from 40px to 28px for mobile - still large and readable on small screens */
-      font-size: 28px;
-    }
-    
-    .audio-button {
-      padding: 12px 24px;
-      font-size: 15px;
-    }
-    
-    /* Single column on mobile for better touch targets */
-    .options-section {
-      grid-template-columns: 1fr;
-      gap: 12px;
+      font-size: clamp(24px, 5vw, 32px);
       margin-bottom: 24px;
     }
     
+    /* Enable 2-column grid on tablet */
+    .options-section {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
     .option-button {
-      /* Scaled down from 40px to 28px to match question text on mobile */
-      padding: 20px 24px;
-      min-height: 80px;
-      font-size: 28px;
-    }
-    
-    .result-message {
-      font-size: 18px;
-      padding: 12px 20px;
-      margin-bottom: 20px;
-    }
-    
-    .next-button {
-      padding: 14px 32px;
-      font-size: 15px;
-    }
-    
-    .score-indicator {
-      bottom: 16px;
-      right: 16px;
-      padding: 10px 16px;
-      font-size: 14px;
+      min-height: 75px;
+      font-size: clamp(18px, 4vw, 22px);
     }
     
     .completion-screen {
-      padding: 32px 16px;
-    }
-    
-    .completion-screen h1 {
-      font-size: 32px;
-      margin-bottom: 24px;
-    }
-    
-    .score-display {
-      margin: 32px 0;
+      padding: 40px 32px;
     }
     
     .score-circle {
-      width: 160px;
-      height: 160px;
+      width: 200px;
+      height: 200px;
+    }
+  }
+  
+  /* =============================================================================
+     DESKTOP BREAKPOINT (min-width: 900px)
+     ============================================================================= */
+  
+  @media (min-width: 900px) {
+    .lesson-header {
+      padding: 20px 24px;
+    }
+    
+    .lesson-content {
+      padding: 40px 32px;
+    }
+    
+    .question-text {
+      font-size: 32px;
+    }
+    
+    .options-section {
+      gap: 18px;
+    }
+    
+    .option-button {
+      font-size: 22px;
+      min-height: 85px;
+    }
+    
+    .completion-screen {
+      padding: 48px 40px;
+    }
+    
+    .score-circle {
+      width: 220px;
+      height: 220px;
+    }
+    
+    /* Hover effects for desktop */
+    .back-button:hover,
+    .audio-button:hover,
+    .next-button:hover,
+    .continue-button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .option-button:hover:not(.correct):not(.incorrect) {
+      border-color: #667eea;
+      background: #f7fafc;
+      transform: translateY(-2px);
+    }
+  }
+  
+  /* =============================================================================
+     LANDSCAPE ORIENTATION - Mobile (KEEP SINGLE COLUMN)
+     ============================================================================= */
+  
+  @media (max-height: 600px) and (orientation: landscape) and (max-width: 896px) {
+    .lesson-header {
+      min-height: 60px;
+      padding: 12px 16px;
+    }
+    
+    .lesson-content {
+      padding: 16px 12px;
+    }
+    
+    .question-section {
+      margin-bottom: 16px;
+    }
+    
+    .question-text {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    
+    .audio-button {
+      min-height: 44px;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+    
+    /* KEEP SINGLE COLUMN in landscape mobile */
+    .options-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    
+    .option-button {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+    
+    .completion-screen {
+      padding: 16px 12px;
+      min-height: calc(100vh - 60px);
+    }
+    
+    .completion-screen h1 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    
+    .score-display {
+      margin: 12px 0;
+      gap: 12px;
+    }
+    
+    .score-circle {
+      width: 110px;
+      height: 110px;
       border-width: 4px;
     }
     
     .score-percentage {
-      font-size: 40px;
+      font-size: 28px;
     }
     
     .score-text {
-      font-size: 14px;
+      font-size: 10px;
     }
     
     .xp-earned {
-      margin: 24px 0;
+      margin: 12px 0;
     }
     
     .xp-badge {
-      font-size: 24px;
-      padding: 12px 24px;
+      font-size: 16px;
+      padding: 8px 16px;
     }
     
     .continue-button {
-      padding: 16px 48px;
-      font-size: 16px;
-      margin-top: 32px;
+      min-height: 44px;
+      padding: 10px 24px;
+      margin-top: 16px;
+      font-size: 14px;
     }
   }
   
-  /* ============================================================================
-     EXTRA SMALL SCREENS - Centered Counter on Tiny Screens
-     ============================================================================ */
+  /* =============================================================================
+     VERY SMALL SCREENS (320px-360px) - GUARANTEED SINGLE COLUMN
+     ============================================================================= */
   
   @media (max-width: 360px) {
-    /**
-     * For very small screens, the centered question counter provides crucial
-     * visual balance and makes progress tracking easier to see at a glance.
-     */
     .lesson-header {
-      padding: 10px 8px;
-      gap: 6px;
+      padding: 12px;
+      gap: 8px;
     }
     
     .back-button {
-      padding: 6px 8px;
-      font-size: 11px;
-      min-width: 50px;
-    }
-    
-    .progress-bar {
-      /* Grid continues to handle sizing gracefully */
+      min-width: 70px;
+      padding: 10px 12px;
+      font-size: 12px;
     }
     
     .question-counter {
+      padding: 6px 12px;
       font-size: 11px;
-      padding: 5px 10px;
-      min-width: 45px;
-      /* Center positioning maintained even on smallest screens */
+    }
+    
+    .lesson-content {
+      padding: 20px 12px;
+    }
+    
+    .question-text {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    
+    .audio-button {
+      min-height: 50px;
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+    
+    /* Force single column */
+    .options-section {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px;
+    }
+    
+    .option-button {
+      width: 100% !important;
+      min-height: 64px;
+      padding: 16px 16px;
+      font-size: 16px;
+    }
+    
+    .completion-screen {
+      padding: 20px 12px;
+    }
+    
+    .completion-screen h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .score-circle {
+      width: 130px;
+      height: 130px;
+      border-width: 4px;
+    }
+    
+    .score-percentage {
+      font-size: 32px;
+    }
+    
+    .score-text {
+      font-size: 11px;
+    }
+    
+    .xp-badge {
+      font-size: 18px;
+      padding: 12px 20px;
+    }
+    
+    .continue-button {
+      min-height: 50px;
+      padding: 14px 32px;
+      font-size: 15px;
     }
   }
   
-  /* ============================================================================
-     ACCESSIBILITY - REDUCED MOTION
-     ============================================================================ */
+  /* =============================================================================
+     REDUCED MOTION - Accessibility
+     ============================================================================= */
   
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -1018,13 +734,14 @@
     }
   }
   
-  /* ============================================================================
-     ACCESSIBILITY - HIGH CONTRAST
-     ============================================================================ */
+  /* =============================================================================
+     HIGH CONTRAST MODE
+     ============================================================================= */
   
   @media (prefers-contrast: high) {
     .lesson-screen {
       background: #000;
+      color: #fff;
     }
     
     .back-button,
@@ -1038,28 +755,8 @@
     .progress-bar {
       border: 2px solid #fff;
     }
-  }
-  
-  /* ============================================================================
-     PRINT STYLES
-     ============================================================================ */
-  
-  @media print {
-    .lesson-screen {
-      background: white;
-      color: black;
-    }
     
-    .lesson-header,
-    .score-indicator {
-      display: none;
-    }
-    
-    .audio-button {
-      display: none;
-    }
-    
-    .option-button {
-      border: 2px solid #ccc;
+    .score-circle {
+      border-width: 6px;
     }
   }

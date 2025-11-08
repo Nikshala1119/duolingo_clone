@@ -1,46 +1,40 @@
-// src/components/StatsDashboard.js - UPDATED to use useProgress hook
+// src/components/StatsDashboard.js - UPDATED WITH FLAG IMAGES
 import React from 'react';
 import { useProgress } from '../context/ProgressContext';
 import './StatsDashboard.css';
 
 /**
- * STATS DASHBOARD COMPONENT
+ * STATS DASHBOARD COMPONENT - Enhanced with Flag Images
  * 
  * This component displays comprehensive statistics about the user's progress
- * across all languages.
+ * across all languages, now with beautiful flag images instead of emoji flags.
  * 
- * WHAT CHANGED:
- * Instead of: import { ProgressContext } from '../context/ProgressContext'
- * We now use: import { useProgress } from '../context/ProgressContext'
+ * WHY FLAG IMAGES?
+ * - Consistent appearance across all devices and operating systems
+ * - High quality at any size
+ * - Works perfectly on Windows where emoji flags don't display
+ * - Professional appearance
  * 
- * And instead of: const { progress, totalXP, resetProgress } = useContext(ProgressContext)
- * We now use: const { progress, totalXP, resetProgress } = useProgress()
- * 
- * This is the modern React pattern - custom hooks make code cleaner and easier to read!
+ * We use the same flagcdn.com service as the LanguageCard for consistency.
  */
 const StatsDashboard = () => {
-  // Use the custom hook to get all progress-related data and functions
   const { progress, totalXP, resetProgress } = useProgress();
 
   /**
    * Calculate Overall Statistics
    * 
-   * This function processes the progress data to generate summary statistics.
-   * It counts total lessons, correct answers, and active languages.
+   * Processes progress data to generate summary statistics.
    */
   const calculateStats = () => {
     let totalLessons = 0;
     let totalCorrectAnswers = 0;
     let languagesStarted = 0;
 
-    // Loop through each language in the progress object
     Object.keys(progress).forEach(key => {
       const lang = progress[key];
       if (lang.completedLessons > 0) {
         languagesStarted++;
         totalLessons += lang.completedLessons;
-        // Each lesson has the score stored as the last score
-        // We estimate total correct answers based on high scores
         totalCorrectAnswers += Math.round((lang.highScore / 100) * lang.totalQuestions * lang.completedLessons);
       }
     });
@@ -57,25 +51,57 @@ const StatsDashboard = () => {
   /**
    * Get Language Display Name
    * 
-   * Converts the language ID (like 'spanish') to a display name (like 'Spanish')
+   * Converts language ID to display name with proper capitalization.
    */
   const getLanguageName = (langId) => {
     return langId.charAt(0).toUpperCase() + langId.slice(1);
   };
 
   /**
-   * Get Language Flag Emoji
+   * Get Language Info with Flag Image URL
    * 
-   * Returns the appropriate flag emoji for each language
+   * Returns comprehensive language information including the flag image URL.
+   * This ensures consistent flag display across all devices.
    */
-  const getLanguageFlag = (langId) => {
-    const flags = {
-      spanish: '🇪🇸',
-      french: '🇫🇷',
-      german: '🇩🇪',
-      japanese: '🇯🇵'
+  const getLanguageInfo = (langId) => {
+    const languageData = {
+      spanish: {
+        countryCode: 'es',
+        countryName: 'Spain',
+        flagEmoji: '🇪🇸'
+      },
+      french: {
+        countryCode: 'fr',
+        countryName: 'France',
+        flagEmoji: '🇫🇷'
+      },
+      german: {
+        countryCode: 'de',
+        countryName: 'Germany',
+        flagEmoji: '🇩🇪'
+      },
+      japanese: {
+        countryCode: 'jp',
+        countryName: 'Japan',
+        flagEmoji: '🇯🇵'
+      }
     };
-    return flags[langId] || '🌍';
+
+    return languageData[langId] || {
+      countryCode: 'un',
+      countryName: 'International',
+      flagEmoji: '🌍'
+    };
+  };
+
+  /**
+   * Get Flag Image URL
+   * 
+   * Constructs the URL to fetch flag images from flagcdn.com.
+   * Using w80 (80px width) for optimal quality at the display size.
+   */
+  const getFlagUrl = (countryCode) => {
+    return `https://flagcdn.com/w80/${countryCode}.png`;
   };
 
   return (
@@ -121,38 +147,72 @@ const StatsDashboard = () => {
           <div className="language-progress-list">
             {Object.keys(progress).map(langId => {
               const lang = progress[langId];
+              const languageInfo = getLanguageInfo(langId);
+              
               return (
                 <div key={langId} className="language-progress-card">
                   <div className="language-header">
-                    <span className="language-flag">{getLanguageFlag(langId)}</span>
-                    <h3 className="language-title">{getLanguageName(langId)}</h3>
+                    {/* 
+                      FLAG IMAGE CONTAINER
+                      
+                      Styled similarly to LanguageCard for visual consistency.
+                      The circular container with border creates a polished look.
+                    */}
+                    <div className="flag-container-stats">
+                      <img 
+                        src={getFlagUrl(languageInfo.countryCode)}
+                        alt={`${languageInfo.countryName} flag`}
+                        className="flag-image-stats"
+                        loading="lazy"
+                        onError={(e) => {
+                          // Fallback to emoji if image fails to load
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      {/* Fallback emoji flag */}
+                      <span 
+                        className="flag-emoji-fallback-stats"
+                        role="img"
+                        aria-label={`${languageInfo.countryName} flag`}
+                      >
+                        {languageInfo.flagEmoji}
+                      </span>
+                    </div>
+
+                    <div className="language-info-stats">
+                      <h3 className="language-title">{getLanguageName(langId)}</h3>
+                      <span className="country-label-stats">{languageInfo.countryName}</span>
+                    </div>
                   </div>
                   
                   <div className="language-stats">
                     <div className="language-stat">
-                      <span className="stat-label">Lessons:</span>
+                      <span className="stat-label">Lessons</span>
                       <span className="stat-value">{lang.completedLessons}</span>
                     </div>
                     <div className="language-stat">
-                      <span className="stat-label">High Score:</span>
+                      <span className="stat-label">High Score</span>
                       <span className="stat-value">{lang.highScore}%</span>
                     </div>
                     <div className="language-stat">
-                      <span className="stat-label">Last Score:</span>
+                      <span className="stat-label">Last Score</span>
                       <span className="stat-value">{lang.lastScore}%</span>
                     </div>
                   </div>
 
                   {/* Progress Bar */}
                   <div className="progress-bar-container">
-                    <div className="progress-bar-label">Completion</div>
+                    <div className="progress-bar-label">
+                      <span>Completion</span>
+                      <span className="progress-bar-percentage">{lang.highScore}%</span>
+                    </div>
                     <div className="progress-bar">
                       <div 
                         className="progress-bar-fill"
                         style={{ width: `${Math.min(lang.highScore, 100)}%` }}
                       />
                     </div>
-                    <div className="progress-bar-percentage">{lang.highScore}%</div>
                   </div>
 
                   {lang.lastCompleted && (
