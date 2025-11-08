@@ -36,96 +36,6 @@
     line-height: 1.2;
   }
   
-  /* =============================================================================
-     RESET BUTTON - ENHANCED STYLING
-     ============================================================================= */
-  
-  .reset-btn {
-    /* Size & Layout */
-    min-height: 56px;
-    width: 100%;
-    max-width: 320px;
-    padding: 16px 32px;
-    
-    /* Visual Style */
-    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    
-    /* Add subtle inner shadow for depth */
-    box-shadow: 
-      0 4px 14px rgba(255, 71, 87, 0.4),
-      inset 0 -2px 8px rgba(0, 0, 0, 0.15);
-    
-    /* Typography */
-    font-size: clamp(15px, 4vw, 17px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    
-    /* Icon & Text Layout */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    
-    /* Interaction */
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    
-    /* Performance */
-    transform: translateZ(0);
-    will-change: transform;
-    
-    /* Add a subtle border for polish */
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    
-    /* Position icon emoji properly */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  }
-  
-  /* Icon styling within button (if using emoji or icon font) */
-  .reset-btn::before {
-    content: '🔄';
-    font-size: clamp(18px, 4.5vw, 22px);
-    display: inline-block;
-    transition: transform 0.6s ease;
-    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-  }
-  
-  /* Rotate icon on hover (desktop) */
-  .reset-btn:hover::before {
-    transform: rotate(180deg);
-  }
-  
-  /* Active state - pressed effect */
-  .reset-btn:active {
-    transform: scale(0.96) translateY(1px);
-    box-shadow: 
-      0 2px 8px rgba(255, 71, 87, 0.3),
-      inset 0 -1px 4px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Disabled state */
-  .reset-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
-  
-  .reset-btn:disabled:active {
-    transform: none;
-  }
-  
-  /* Focus state for accessibility */
-  .reset-btn:focus-visible {
-    outline: 3px solid #ff4757;
-    outline-offset: 3px;
-  }
   
   /* =============================================================================
      STATS GRID - Mobile First (Single Column)
@@ -261,7 +171,230 @@
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 8px rgba(88, 204, 2, 0.3);
   }
-  
+
+  /* =============================================================================
+     LANGUAGE PROGRESS CARD - Flag Images Support
+     ============================================================================= */
+
+  .language-progress-card {
+    padding: 24px 20px;
+    border-bottom: 2px solid #f7f7f7;
+    transition: background 0.2s ease;
+  }
+
+  .language-progress-card:last-child {
+    border-bottom: none;
+  }
+
+  .language-progress-card:active {
+    background: #f7f7f7;
+    border-radius: 12px;
+  }
+
+  /* Language Header with Flag */
+  .language-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .flag-container-stats {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 3px solid #e5e5e5;
+  }
+
+  .flag-image-stats {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .flag-emoji-fallback-stats {
+    display: none;
+    font-size: 32px;
+    line-height: 1;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+
+  .language-info-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .language-title {
+    margin: 0;
+    font-size: clamp(22px, 5.5vw, 28px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #1a202c;
+  }
+
+  .country-label-stats {
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #718096;
+  }
+
+  /* Language Stats Grid */
+  .language-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .language-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .language-stat .stat-label {
+    font-size: clamp(12px, 3vw, 14px);
+    color: #718096;
+    font-weight: 600;
+  }
+
+  .language-stat .stat-value {
+    font-size: clamp(24px, 6vw, 32px);
+    font-weight: 800;
+    color: #58cc02;
+  }
+
+  /* Progress Bar Container */
+  .progress-bar-container {
+    margin-bottom: 16px;
+  }
+
+  .progress-bar-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: clamp(13px, 3.5vw, 15px);
+    font-weight: 600;
+    color: #4a5568;
+  }
+
+  .progress-bar-percentage {
+    color: #58cc02;
+  }
+
+  .progress-bar {
+    height: 12px;
+    background: #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #d7d7d7;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #58cc02 0%, #7fd814 100%);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px rgba(88, 204, 2, 0.3);
+  }
+
+  .last-completed {
+    font-size: clamp(12px, 3vw, 14px);
+    color: #718096;
+    font-style: italic;
+  }
+
+  /* No Progress Message */
+  .no-progress {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+  }
+
+  .no-progress p {
+    font-size: clamp(14px, 3.5vw, 16px);
+    margin: 0;
+  }
+
+  /* Section Titles */
+  .language-progress-section {
+    margin-top: 40px;
+  }
+
+  .section-title {
+    color: #3c3c3c;
+    margin: 0 0 24px 0;
+    font-size: clamp(24px, 6vw, 32px);
+    font-weight: 700;
+  }
+
+  .dashboard-title {
+    color: #3c3c3c;
+    margin: 0 0 32px 0;
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 700;
+  }
+
+  /* Reset Section */
+  .reset-section {
+    margin-top: 40px;
+    text-align: center;
+    padding: 24px;
+    background: #fff3cd;
+    border-radius: 16px;
+    border: 2px solid #ffeeba;
+  }
+
+  .reset-warning {
+    margin: 16px 0 0 0;
+    font-size: clamp(13px, 3.5vw, 15px);
+    color: #856404;
+  }
+
+  .reset-button {
+    min-height: 56px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(255, 71, 87, 0.4);
+    font-size: clamp(15px, 4vw, 17px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .reset-button:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+  }
+
   /* =============================================================================
      TABLET BREAKPOINT (min-width: 600px)
      ============================================================================= */
@@ -277,13 +410,7 @@
       align-items: center;
       gap: 24px;
     }
-    
-    .reset-btn {
-      width: auto;
-      max-width: none;
-      min-width: 240px;
-    }
-    
+
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
@@ -316,27 +443,15 @@
       padding: 32px;
     }
     
-    /* ENHANCED HOVER EFFECTS FOR RESET BUTTON */
-    .reset-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 
-        0 6px 20px rgba(255, 71, 87, 0.5),
-        inset 0 -3px 10px rgba(0, 0, 0, 0.15);
-      background: linear-gradient(135deg, #ff5768 0%, #ff4757 100%);
-    }
-    
-    /* Pressed state on desktop */
-    .reset-btn:hover:active {
-      transform: translateY(-1px);
-      box-shadow: 
-        0 3px 12px rgba(255, 71, 87, 0.4),
-        inset 0 -2px 6px rgba(0, 0, 0, 0.15);
-    }
-    
     .stat-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 24px rgba(88, 204, 2, 0.2);
       border-color: #58cc02;
+    }
+
+    .reset-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 71, 87, 0.5);
     }
     
     .progress-item:hover {
@@ -361,15 +476,7 @@
       justify-content: space-between;
       align-items: center;
     }
-    
-    .reset-btn {
-      width: auto;
-      max-width: none;
-      min-width: 200px;
-      min-height: 48px;
-      padding: 12px 24px;
-    }
-    
+
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
@@ -402,17 +509,7 @@
     .stats-header {
       gap: 16px;
     }
-    
-    .reset-btn {
-      min-height: 52px;
-      padding: 14px 24px;
-      font-size: 14px;
-    }
-    
-    .reset-btn::before {
-      font-size: 16px;
-    }
-    
+
     .stats-grid {
       gap: 16px;
     }
@@ -431,56 +528,15 @@
   }
   
   /* =============================================================================
-     ALTERNATIVE RESET BUTTON STYLES (Optional Variants)
-     ============================================================================= */
-  
-  /* Danger Style - More Prominent Warning */
-  .reset-btn.danger-style {
-    background: linear-gradient(135deg, #ee5a6f 0%, #d93f50 100%);
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-      0 4px 14px rgba(238, 90, 111, 0.5),
-      inset 0 -3px 10px rgba(0, 0, 0, 0.2),
-      0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  }
-  
-  /* Outlined Style - Subtler Approach */
-  .reset-btn.outlined-style {
-    background: transparent;
-    color: #ff4757;
-    border: 3px solid #ff4757;
-    box-shadow: none;
-  }
-  
-  .reset-btn.outlined-style:hover {
-    background: #ff4757;
-    color: white;
-    box-shadow: 0 4px 14px rgba(255, 71, 87, 0.4);
-  }
-  
-  /* Pill Style - Rounded Ends */
-  .reset-btn.pill-style {
-    border-radius: 100px;
-  }
-  
-  /* =============================================================================
      REDUCED MOTION - Accessibility
      ============================================================================= */
-  
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
       animation: none !important;
       transition-duration: 0.01ms !important;
-    }
-    
-    .reset-btn::before {
-      transition: none;
-    }
-    
-    .reset-btn:hover::before {
-      transform: none;
     }
   }
   
@@ -500,25 +556,25 @@
       background: #000;
       color: #fff;
     }
-    
-    .reset-btn {
+
+    .reset-button {
       border: 3px solid currentColor;
     }
   }
-  
+
   /* =============================================================================
      PRINT STYLES
      ============================================================================= */
-  
+
   @media print {
     .stats-dashboard {
       background: white;
     }
-    
-    .reset-btn {
+
+    .reset-button {
       display: none;
     }
-    
+
     .stat-card,
     .language-progress-list {
       box-shadow: none;
