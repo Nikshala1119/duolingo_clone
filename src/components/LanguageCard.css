@@ -447,31 +447,8 @@
     }
     
     .start-button {
-        min-height: 56px;
-        width: 100%;
-        padding: 18px 32px 18px 24px;  /* ← Changed: More padding on right (32px) */
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 16px;
-        font-size: clamp(16px, 4vw, 18px);
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 4px;
-        touch-action: manipulation;
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-        transform: translateZ(0);
-        will-change: transform;
-      }
       min-height: 48px;
-      padding: 14px 20px;
+      padding: 14px 24px 14px 20px;
     }
   
   
